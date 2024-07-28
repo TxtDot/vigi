@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.window {
+  @apply bg-gray-900 text-slate-200;
+  @apply p-3 gap-3 w-screen h-screen;
+  @apply grid grid-cols-8;
+}
