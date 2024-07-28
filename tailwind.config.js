@@ -8,9 +8,11 @@ export default {
         block: "var(--c1)",
         light: "var(--c2)",
         dark: "var(--c3)",
+        blockLight: "var(--c4)",
       },
       textColor: {
         main: "var(--c2)",
+        light: "var(--c5)",
       },
     },
   },

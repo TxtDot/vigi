@@ -8,23 +8,27 @@
   --c2: #73bf67;
 
   --c3: #193815;
+  --c4: #56aa49;
+  --c5: #96e28a;
 }
 
 body {
   @apply bg-main text-main;
+  user-select: none;
 }
 
 .common-window {
   @apply p-3 gap-3 w-screen h-screen;
-  @apply grid grid-cols-8;
+  @apply flex;
 }
 
 .main-window {
-  @apply col-span-6 flex flex-col gap-3;
+  @apply grow flex flex-col gap-3;
 }
 
 .browser-window {
   @apply grow shadow-inner;
+  user-select: text;
 }
 
 .window-controls {
@@ -46,5 +50,35 @@ body {
 }
 
 .sidebar {
-  @apply col-span-2;
+  @apply basis-1/5;
+  @apply ease-out duration-100;
+}
+
+.sidebar.collapsed {
+  @apply basis-0;
+
+  @apply p-0 m-0;
+}
+
+.top-bar {
+  @apply flex;
+}
+
+.search-input {
+  @apply ms-2 px-2 py-1 rounded-lg grow;
+}
+
+input {
+  @apply bg-block outline-none;
+  @apply focus:bg-blockLight focus:text-light;
+
+  @apply ease-out duration-100;
+}
+
+input::placeholder {
+  @apply text-main focus:text-light;
+}
+
+::selection {
+  @apply bg-block;
 }
