@@ -1,12 +1,13 @@
 <script lang="ts">
   import "../app.css";
 
-  import Block from "$lib/components/Block.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import WindowControls from "$lib/components/WindowControls.svelte";
-  import { slide } from "svelte/transition";
+  import Sidebar from "$lib/components/Sidebar.svelte";
+  import BrowserWindow from "$lib/components/BrowserWindow.svelte";
+  import type { Root } from "@txtdot/dalet";
 
   let sidebarOpen = true;
+  let data: Root = [];
 
   document.addEventListener("keypress", (e: KeyboardEvent) => {
     const formElements = ["INPUT", "TEXTAREA", "SELECT", "OPTION"];
@@ -18,19 +19,10 @@
 </script>
 
 <div class="common-window" data-tauri-drag-region>
-  <Block className={`sidebar${sidebarOpen ? "" : " collapsed"}`} draggable>
-    {#if sidebarOpen}
-      <div transition:slide={{ axis: "x", duration: 100 }}>
-        <WindowControls />
-      </div>
-    {/if}
-  </Block>
+  <Sidebar bind:sidebarOpen />
 
   <div class="main-window">
-    <TopBar
-      bind:sidebarOpen
-      onSidebarToggle={() => (sidebarOpen = !sidebarOpen)}
-    />
-    <Block className="browser-window">Browser window</Block>
+    <TopBar bind:sidebarOpen />
+    <BrowserWindow {data} />
   </div>
 </div>

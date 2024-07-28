@@ -7,7 +7,6 @@
   import Block from "./Block.svelte";
   import Button from "./Button.svelte";
 
-  export let onSidebarToggle = () => {};
   export let onBack = () => {};
   export let onForward = () => {};
   export let onInput = () => {};
@@ -20,7 +19,7 @@
 
 <div class="top-bar">
   <Block className="flex">
-    <Button onClick={onSidebarToggle}>
+    <Button onClick={() => (sidebarOpen = !sidebarOpen)}>
       {#if sidebarOpen}
         <SidebarLeft />
       {:else}
