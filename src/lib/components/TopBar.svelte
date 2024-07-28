@@ -4,6 +4,7 @@
   import Reload from "$lib/icons/Reload.svelte";
   import SidebarLeft from "$lib/icons/SidebarLeft.svelte";
   import SidebarRight from "$lib/icons/SidebarRight.svelte";
+  import Block from "./Block.svelte";
   import Button from "./Button.svelte";
 
   export let onSidebarToggle = () => {};
@@ -18,7 +19,7 @@
 </script>
 
 <div class="top-bar">
-  <div class="flex bg-block p-2 rounded-xl">
+  <Block className="flex">
     <Button onClick={onSidebarToggle}>
       {#if sidebarOpen}
         <SidebarLeft />
@@ -29,7 +30,7 @@
     <Button onClick={onBack}><ArrowLeft /></Button>
     <Button onClick={onForward}><ArrowRight /></Button>
     <Button onClick={onInput}><Reload /></Button>
-  </div>
+  </Block>
 
   <input
     type="text"

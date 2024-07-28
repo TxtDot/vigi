@@ -46,7 +46,7 @@ body {
 }
 
 .block {
-  @apply p-3 rounded-xl bg-block;
+  @apply p-2 rounded-xl bg-block;
 }
 
 .sidebar {

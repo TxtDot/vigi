@@ -18,7 +18,7 @@
 </script>
 
 <div class="common-window" data-tauri-drag-region>
-  <Block className={`sidebar${sidebarOpen ? "" : " collapsed"}`}>
+  <Block className={`sidebar${sidebarOpen ? "" : " collapsed"}`} draggable>
     {#if sidebarOpen}
       <div transition:slide={{ axis: "x", duration: 100 }}>
         <WindowControls />
