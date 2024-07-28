@@ -2,6 +2,6 @@
   export let className = "";
 </script>
 
-<div class="p-3 rounded-xl bg-gray-700{className ? ` ${className}` : ''}">
+<div class="block{className ? ` ${className}` : ''}">
   <slot />
 </div>

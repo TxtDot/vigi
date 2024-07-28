@@ -4,9 +4,13 @@
   import "../app.css";
 </script>
 
-<div class="window" data-tauri-drag-region>
-  <Block className="col-span-2">
+<div class="common-window" data-tauri-drag-region>
+  <Block className="sidebar">
     <WindowControls />
   </Block>
-  <Block className="col-span-6">Browser window</Block>
+  <div class="main-window">
+    <Block className="top-bar">Top bar</Block>
+
+    <Block className="browser-window">Browser window</Block>
+  </div>
 </div>

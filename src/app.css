@@ -2,8 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-.window {
-  @apply bg-gray-900 text-slate-200;
+:root {
+  --c0: #274f21;
+  --c1: #448939;
+  --c2: #73bf67;
+
+  --c3: #193815;
+}
+
+body {
+  @apply bg-main text-main;
+}
+
+.common-window {
   @apply p-3 gap-3 w-screen h-screen;
   @apply grid grid-cols-8;
+}
+
+.main-window {
+  @apply col-span-6 flex flex-col gap-3;
+}
+
+.browser-window {
+  @apply grow shadow-inner;
+}
+
+.window-controls {
+  @apply flex justify-start;
+}
+
+.button {
+  @apply p-1 rounded-lg;
+  @apply ease-out duration-150;
+
+  @apply hover:bg-main;
+  @apply hover:px-2 hover:mx-1 hover:scale-125 hover:cursor-pointer;
+
+  @apply active:bg-dark;
+}
+
+.block {
+  @apply p-3 rounded-xl bg-block;
+}
+
+.sidebar {
+  @apply col-span-2;
 }

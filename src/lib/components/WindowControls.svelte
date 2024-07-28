@@ -7,7 +7,7 @@
   import { appWindow } from "@tauri-apps/api/window";
 </script>
 
-<div class="flex justify-start" data-tauri-drag-region>
+<div class="window-controls" data-tauri-drag-region>
   <Button onClick={() => appWindow.close()}>
     <Close />
   </Button>
