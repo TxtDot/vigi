@@ -5,4 +5,12 @@
   export let body: Body;
 </script>
 
-<section class="el"><BodyRenderer {body} /></section>
+<section class="el">
+  {#if typeof body === "string"}
+    {#each body.split("\n") as line}
+      {line} <br />
+    {/each}
+  {:else}
+    <BodyRenderer {body} />
+  {/if}
+</section>

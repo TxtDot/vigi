@@ -27,8 +27,7 @@ body {
 }
 
 .browser-window {
-  @apply grow shadow-inner;
-  user-select: text;
+  @apply grow shadow-inner overflow-auto select-text;
 }
 
 .window-controls {
@@ -50,7 +49,7 @@ body {
 }
 
 .sidebar {
-  @apply basis-1/5;
+  @apply basis-1/5 shrink-0;
   @apply ease-out duration-100;
 }
 
