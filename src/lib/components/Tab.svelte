@@ -3,7 +3,6 @@
   import { removeTab, selectTab } from "$lib/utils";
   import { slide } from "svelte/transition";
   import Close from "$lib/icons/Close.svelte";
-  import Button from "./Button.svelte";
 
   export let active = false;
   export let tab: StateTab;
@@ -16,12 +15,20 @@
 </script>
 
 <div
-  class="flex gap-1 items-center"
+  class="flex gap-1 items-center shrink"
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
   role="tab"
   tabindex={id}
 >
+  {#if hovered}
+    <button
+      class="close-button"
+      transition:slide={{ duration: 100, axis: "x" }}
+      on:click={() => removeTab(id)}><Close /></button
+    >
+  {/if}
+
   <button
     class="tab"
     class:active
@@ -31,16 +38,6 @@
       selectTab(id);
     }}
   >
-    <div class="tab-title">
-      {tab.title}
-    </div>
+    {tab.title}
   </button>
-
-  {#if hovered}
-    <button
-      class="close-button"
-      transition:slide={{ duration: 100, axis: "x" }}
-      on:click={() => removeTab(id)}><Close /></button
-    >
-  {/if}
 </div>

@@ -20,6 +20,7 @@
 
   topBarInput.subscribe((val) => {
     input = val;
+    currentInput = val;
   });
 
   let iEl: HTMLInputElement;

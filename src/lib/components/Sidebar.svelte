@@ -16,7 +16,7 @@
   let currentTabIndex = 0;
 
   state.subscribe(async (state) => {
-    tabs = state.tabs;
+    tabs = state.tabs.toReversed();
     currentTabIndex = state.current_tab_index;
 
     if (tabs.length === 0) {
@@ -38,7 +38,11 @@
 
     <div class="tabs">
       {#each tabs as tab, i (tab.id)}
-        <Tab {tab} active={currentTabIndex === i} id={i} />
+        <Tab
+          {tab}
+          active={currentTabIndex === tabs.length - 1 - i}
+          id={tabs.length - 1 - i}
+        />
       {/each}
     </div>
   {/if}

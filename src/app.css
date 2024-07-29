@@ -97,7 +97,7 @@ input::placeholder {
 
   @apply hover:px-4;
 
-  @apply flex items-center justify-between gap-2 w-full;
+  @apply flex items-center justify-between gap-2 w-full truncate;
 }
 
 .close-button {
@@ -119,10 +119,6 @@ input::placeholder {
   @apply bg-vigi-40 text-vigi-0 font-bold;
 
   @apply hover:bg-vigi-45;
-}
-
-.tab-title {
-  @apply truncate;
 }
 
 ::selection {

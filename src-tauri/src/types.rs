@@ -91,19 +91,24 @@ impl VigiState {
 
         self.write_id_counter()?;
         write_tabs(&self.local_tabs_path, &self.tabs)?;
+
+        self.current_tab_index = self.tabs.len() - 1;
+        self.write_current_tab_index()?;
+
         Ok(())
     }
 
     pub fn remove_tab(&mut self, index: usize) -> Result<(), VigiError> {
-        if self.tabs.len() == 1 {
-            self.current_tab_index = 0;
-        } else {
-            self.current_tab_index = self.current_tab_index + 1;
+        if self.tabs.len() - 1 == index && self.current_tab_index == index {
+            if self.current_tab_index > 0 {
+                self.current_tab_index -= 1;
+
+                self.write_current_tab_index()?;
+            }
         }
 
         self.tabs.remove(index);
         write_tabs(&self.local_tabs_path, &self.tabs)?;
-        self.write_current_tab_index()?;
 
         Ok(())
     }
