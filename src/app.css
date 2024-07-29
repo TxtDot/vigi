@@ -3,17 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --c0: #274f21;
-  --c1: #448939;
-  --c2: #73bf67;
+  --min: #96e28a;
+  --max: #193815;
 
-  --c3: #193815;
-  --c4: #56aa49;
-  --c5: #96e28a;
+  /* --min: #8a9fe2;
+  --max: #151a38; */
 }
 
 body {
-  @apply bg-main text-main;
+  @apply bg-vigi-90 text-vigi-10;
   user-select: none;
 }
 
@@ -44,14 +42,14 @@ body {
   @apply p-1 rounded-lg;
   @apply ease-out duration-150;
 
-  @apply hover:bg-main;
+  @apply hover:bg-vigi-90;
   @apply hover:px-2 hover:mx-1 hover:scale-125 hover:cursor-pointer;
 
-  @apply active:bg-dark;
+  @apply active:bg-vigi-100;
 }
 
 .block {
-  @apply p-2 rounded-xl bg-block;
+  @apply p-2 rounded-xl bg-vigi-60;
 }
 
 .sidebar {
@@ -72,18 +70,18 @@ body {
 .search-input {
   @apply ms-2 px-2 py-1 rounded-xl grow;
 
-  @apply bg-block outline-none;
-  @apply focus:bg-blockLight focus:text-light;
+  @apply bg-vigi-60 outline-none;
+  @apply focus:bg-vigi-50 focus:text-vigi-0 hover:bg-vigi-55;
 
   @apply ease-out duration-100;
 }
 
 input::placeholder {
-  @apply text-main focus:text-light;
+  @apply text-vigi-40 focus:text-vigi-20;
 }
 
 ::selection {
-  @apply bg-block;
+  @apply bg-vigi-60;
 }
 
 /* width */
@@ -98,12 +96,12 @@ input::placeholder {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply rounded-xl bg-main bg-clip-content;
+  @apply rounded-xl bg-vigi-90 bg-clip-content;
   border: 6px solid transparent;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-dark;
+  @apply bg-vigi-100;
   border: 5px solid transparent;
 }

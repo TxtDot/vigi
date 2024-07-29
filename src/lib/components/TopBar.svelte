@@ -4,6 +4,8 @@
   import Reload from "$lib/icons/Reload.svelte";
   import SidebarLeft from "$lib/icons/SidebarLeft.svelte";
   import SidebarRight from "$lib/icons/SidebarRight.svelte";
+  import { topBarInput } from "$lib/stores";
+  import { get } from "svelte/store";
   import Block from "./Block.svelte";
   import Button from "./Button.svelte";
 
@@ -12,11 +14,15 @@
   export let onInput = () => {};
 
   export let sidebarOpen = true;
-  export let inputValue = "";
 
-  let currentInputValue = "";
+  let currentInput = "";
+  let input = "";
 
-  let input: HTMLInputElement;
+  topBarInput.subscribe((val) => {
+    input = val;
+  });
+
+  let iEl: HTMLInputElement;
 </script>
 
 <div class="top-bar">
@@ -37,20 +43,23 @@
     type="text"
     placeholder="Search or enter URL"
     class="search-input"
-    bind:value={currentInputValue}
-    bind:this={input}
+    bind:value={currentInput}
+    bind:this={iEl}
     on:keypress={(e) => {
       if (e.key === "Enter") {
-        inputValue = currentInputValue;
+        topBarInput.set(currentInput);
         onInput();
       }
     }}
     on:focus={() => {
-      currentInputValue = inputValue;
-      setTimeout(() => input.select(), 1);
+      currentInput = input;
+      setTimeout(() => {
+        iEl.select();
+        iEl.scrollLeft = iEl.scrollWidth;
+      }, 1);
     }}
     on:focusout={() => {
-      currentInputValue = decodeURIComponent(inputValue);
+      currentInput = decodeURIComponent(input);
     }}
   />
 </div>

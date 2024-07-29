@@ -7,6 +7,7 @@
   import type { Root } from "@txtdot/dalet";
 
   import { invoke } from "@tauri-apps/api/tauri";
+  import { topBarInput } from "$lib/stores";
 
   let sidebarOpen = true;
 
@@ -23,9 +24,9 @@
     if (e.key === "q") sidebarOpen = !sidebarOpen;
   });
 
-  function processInput() {
+  topBarInput.subscribe((input) => {
     isLoading = true;
-    invoke("process_input", { input: inputValue })
+    invoke("process_input", { input })
       .then((res) => {
         data = res as Root;
         isLoading = false;
@@ -34,7 +35,7 @@
         data = [{ id: 0, body: "Error: " + err, argument: null }];
         isLoading = false;
       });
-  }
+  });
 </script>
 
 <div
@@ -44,7 +45,7 @@
   <Sidebar bind:sidebarOpen />
 
   <div class="main-window">
-    <TopBar bind:sidebarOpen bind:inputValue onInput={processInput} />
+    <TopBar bind:sidebarOpen />
     <BrowserWindow {data} bind:isLoading />
   </div>
 </div>
