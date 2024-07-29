@@ -93,7 +93,7 @@ input::placeholder {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: transparent;
+  @apply bg-transparent;
 }
 
 /* Handle */
