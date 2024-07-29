@@ -5,7 +5,6 @@
   import SidebarLeft from "$lib/icons/SidebarLeft.svelte";
   import SidebarRight from "$lib/icons/SidebarRight.svelte";
   import { topBarInput } from "$lib/stores";
-  import { get } from "svelte/store";
   import Block from "./Block.svelte";
   import Button from "./Button.svelte";
 
@@ -20,7 +19,7 @@
 
   topBarInput.subscribe((val) => {
     input = val;
-    currentInput = val;
+    currentInput = decodeURIComponent(input);
   });
 
   let iEl: HTMLInputElement;
