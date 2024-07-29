@@ -8,10 +8,8 @@
 </script>
 
 <Block className="browser-window">
-  {#if isLoading && data.length === 0}
+  {#if isLoading}
     <div>Loading...</div>
-  {:else if !isLoading && data.length === 0}
-    <div>No data</div>
   {:else}
     <Renderer {data} />
   {/if}

@@ -14,10 +14,10 @@ async fn process_input(input: String) -> Result<Vec<Tag>, VigiError> {
 
     match reqwest::get(input).await {
         Ok(res) => match res.text().await {
-            Ok(res) => Ok(vec![dalet::Tag::new(0, Body::Text(res), Argument::Null)]),
-            Err(err) => Err(VigiError::ParseError(err.to_string())),
+            Ok(res) => Ok(vec![Tag::new(0, Body::Text(res), Argument::Null)]),
+            Err(_) => Err(VigiError::ParseError),
         },
-        Err(err) => Err(VigiError::NetworkError(err.to_string())),
+        Err(_) => Err(VigiError::NetworkError),
     }
 }
 

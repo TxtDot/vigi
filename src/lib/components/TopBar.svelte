@@ -14,6 +14,8 @@
   export let sidebarOpen = true;
   export let inputValue = "";
 
+  let currentInputValue = "";
+
   let input: HTMLInputElement;
 </script>
 
@@ -35,9 +37,20 @@
     type="text"
     placeholder="Search or enter URL"
     class="search-input"
-    bind:value={inputValue}
+    bind:value={currentInputValue}
     bind:this={input}
-    on:keypress={(e) => e.key === "Enter" && onInput()}
-    on:focus={() => setTimeout(() => input.select(), 1)}
+    on:keypress={(e) => {
+      if (e.key === "Enter") {
+        inputValue = currentInputValue;
+        onInput();
+      }
+    }}
+    on:focus={() => {
+      currentInputValue = inputValue;
+      setTimeout(() => input.select(), 1);
+    }}
+    on:focusout={() => {
+      currentInputValue = decodeURIComponent(inputValue);
+    }}
   />
 </div>

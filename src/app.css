@@ -20,6 +20,12 @@ body {
 .common-window {
   @apply p-3 gap-3 w-screen h-screen;
   @apply flex;
+
+  @apply ease-out duration-100;
+}
+
+.common-window.collapsed {
+  @apply gap-0;
 }
 
 .main-window {
@@ -64,10 +70,8 @@ body {
 }
 
 .search-input {
-  @apply ms-2 px-2 py-1 rounded-lg grow;
-}
+  @apply ms-2 px-2 py-1 rounded-xl grow;
 
-input {
   @apply bg-block outline-none;
   @apply focus:bg-blockLight focus:text-light;
 
@@ -80,4 +84,26 @@ input::placeholder {
 
 ::selection {
   @apply bg-block;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply rounded-xl bg-main bg-clip-content;
+  border: 6px solid transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-dark;
+  border: 5px solid transparent;
 }

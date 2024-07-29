@@ -9,7 +9,9 @@
   import { invoke } from "@tauri-apps/api/tauri";
 
   let sidebarOpen = true;
+
   let inputValue = "";
+  let isLoading = false;
 
   let data: Root = [];
 
@@ -22,21 +24,27 @@
   });
 
   function processInput() {
+    isLoading = true;
     invoke("process_input", { input: inputValue })
       .then((res) => {
         data = res as Root;
+        isLoading = false;
       })
       .catch((err) => {
         data = [{ id: 0, body: "Error: " + err, argument: null }];
+        isLoading = false;
       });
   }
 </script>
 
-<div class="common-window" data-tauri-drag-region>
+<div
+  class={`common-window${sidebarOpen ? "" : " collapsed"}`}
+  data-tauri-drag-region
+>
   <Sidebar bind:sidebarOpen />
 
   <div class="main-window">
     <TopBar bind:sidebarOpen bind:inputValue onInput={processInput} />
-    <BrowserWindow {data} />
+    <BrowserWindow {data} bind:isLoading />
   </div>
 </div>
