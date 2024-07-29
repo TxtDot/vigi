@@ -3,7 +3,7 @@ use std::{
     path::PathBuf,
 };
 
-use crate::types::Tab;
+use crate::types::{Tab, VigiError};
 
 pub fn read_jsonl_tabs(path: &PathBuf) -> Vec<Tab> {
     fs::read_to_string(&path)
@@ -24,11 +24,8 @@ pub fn read_or_create_jsonl(path: &PathBuf) -> Vec<Tab> {
     }
 }
 
-pub fn read_or_create_current_tab_index(path: &PathBuf) -> usize {
-    println!(
-        "  Getting current tab index from {}",
-        path.to_string_lossy()
-    );
+pub fn read_or_create_number(path: &PathBuf) -> usize {
+    println!("  Getting number from {}", path.to_string_lossy());
     if path.exists() {
         fs::read_to_string(path)
             .unwrap()
@@ -39,4 +36,15 @@ pub fn read_or_create_current_tab_index(path: &PathBuf) -> usize {
         fs::write(path, "0").unwrap();
         0
     }
+}
+
+pub fn write_tabs(path: &PathBuf, tabs: &Vec<Tab>) -> Result<(), VigiError> {
+    fs::write(
+        path,
+        tabs.iter()
+            .map(|tab| serde_json::to_string(tab).unwrap())
+            .collect::<Vec<String>>()
+            .join("\n"),
+    )
+    .map_err(|_| VigiError::StateUpdate)
 }

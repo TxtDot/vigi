@@ -8,13 +8,15 @@
 
   import { invoke } from "@tauri-apps/api/tauri";
   import { topBarInput } from "$lib/stores";
+  import { updateVigiState } from "$lib/utils";
 
   let sidebarOpen = true;
 
-  let inputValue = "";
   let isLoading = false;
 
   let data: Root = [];
+
+  updateVigiState();
 
   document.addEventListener("keypress", (e: KeyboardEvent) => {
     const formElements = ["INPUT", "TEXTAREA", "SELECT", "OPTION"];
@@ -34,6 +36,9 @@
       .catch((err) => {
         data = [{ id: 0, body: "Error: " + err, argument: null }];
         isLoading = false;
+      })
+      .finally(() => {
+        updateVigiState();
       });
   });
 </script>
@@ -42,7 +47,7 @@
   class={`common-window${sidebarOpen ? "" : " collapsed"}`}
   data-tauri-drag-region
 >
-  <Sidebar bind:sidebarOpen />
+  <Sidebar bind:collapsed={sidebarOpen} />
 
   <div class="main-window">
     <TopBar bind:sidebarOpen />

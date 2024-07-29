@@ -43,9 +43,13 @@ body {
   @apply ease-out duration-150;
 
   @apply hover:bg-vigi-90;
-  @apply hover:px-2 hover:mx-1 hover:scale-125 hover:cursor-pointer;
+  @apply hover:px-2 hover:mx-1 hover:scale-125 cursor-pointer;
 
   @apply active:bg-vigi-100;
+}
+
+.open-tabs {
+  @apply flex justify-between mt-2 mx-2;
 }
 
 .block {
@@ -53,14 +57,14 @@ body {
 }
 
 .sidebar {
-  @apply basis-1/5 shrink-0;
+  @apply shrink-0 grow-0 flex flex-col w-1/5;
   @apply ease-out duration-100;
 }
 
 .sidebar.collapsed {
   @apply basis-0;
 
-  @apply p-0 m-0;
+  @apply p-0 m-0 bg-transparent;
 }
 
 .top-bar {
@@ -80,13 +84,54 @@ input::placeholder {
   @apply text-vigi-40 focus:text-vigi-20;
 }
 
+.tabs {
+  @apply flex flex-col gap-1 mt-2 grow overflow-auto;
+}
+
+.tab {
+  @apply p-2 rounded-xl bg-vigi-50;
+  @apply cursor-pointer;
+  @apply ease-out duration-100;
+
+  @apply hover:bg-vigi-55;
+
+  @apply hover:px-4;
+
+  @apply flex items-center justify-between gap-2 w-full;
+}
+
+.close-button {
+  @apply p-1 rounded-lg;
+  @apply ease-out duration-100;
+
+  @apply hover:bg-vigi-90 active:bg-vigi-100;
+}
+
+/* .tab .close-button {
+  @apply text-transparent;
+}
+
+.tab:hover .close-button {
+  @apply text-vigi-0;
+} */
+
+.tab.active {
+  @apply bg-vigi-40 text-vigi-0 font-bold;
+
+  @apply hover:bg-vigi-45;
+}
+
+.tab-title {
+  @apply truncate;
+}
+
 ::selection {
   @apply bg-vigi-60;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 
 /* Track */
@@ -96,12 +141,12 @@ input::placeholder {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply rounded-xl bg-vigi-90 bg-clip-content;
+  @apply rounded-xl bg-vigi-70 bg-clip-content;
   border: 6px solid transparent;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-vigi-100;
+  @apply bg-vigi-75;
   border: 5px solid transparent;
 }
