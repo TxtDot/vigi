@@ -11,7 +11,7 @@
 }
 
 body {
-  @apply bg-vigi-90 text-vigi-10;
+  @apply bg-vigi-90 text-vigi-10 cursor-default;
   user-select: none;
 }
 
@@ -31,7 +31,7 @@ body {
 }
 
 .browser-window {
-  @apply grow shadow-inner overflow-auto select-text;
+  @apply grow shadow-inner overflow-auto select-text cursor-auto;
 }
 
 .window-controls {
@@ -48,7 +48,7 @@ body {
   @apply active:bg-vigi-100;
 }
 
-.open-tabs {
+.tabs-category {
   @apply flex justify-between mt-2 mx-2;
 }
 

@@ -1,3 +1,4 @@
+use dalet::{Argument, Body, Tag};
 use serde::{Deserialize, Serialize};
 use std::{fs, path::PathBuf};
 
@@ -9,9 +10,11 @@ pub enum VigiError {
     Parse,
     StateLock,
     StateUpdate,
+    Filesystem,
+    Config,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Debug, Clone)]
 pub struct VigiState {
     pub tabs_id_counter_path: PathBuf,
     pub current_tab_index_path: PathBuf,
@@ -20,10 +23,25 @@ pub struct VigiState {
 
     pub cache_dir: PathBuf,
 
+    // Persistent
     pub tabs_id_counter: usize,
     pub current_tab_index: usize,
     pub tabs: Vec<Tab>,
     pub favorites_tabs: Vec<Tab>,
+
+    // Temporary
+    pub top_bar_input: String,
+    pub current_data: Vec<Tag>,
+}
+
+#[derive(Serialize, Debug, Clone)]
+pub struct VigiJsState {
+    pub current_tab_index: usize,
+    pub tabs: Vec<Tab>,
+    pub favorites_tabs: Vec<Tab>,
+
+    pub top_bar_input: String,
+    pub current_data: Vec<Tag>,
 }
 
 impl VigiState {
@@ -39,14 +57,22 @@ impl VigiState {
             current_tab_index: 0,
             tabs: Vec::new(),
             favorites_tabs: Vec::new(),
+
+            top_bar_input: "".to_string(),
+            current_data: Vec::new(),
         }
     }
 
-    pub fn update_current_tab_index(&mut self, new_index: usize) -> Result<(), VigiError> {
+    pub async fn select_tab(&mut self, new_index: usize) -> Result<(), VigiError> {
         self.current_tab_index = new_index;
-
         self.write_current_tab_index()?;
+
+        self.update_top_bar_input();
         Ok(())
+    }
+
+    pub fn update_top_bar_input(&mut self) {
+        self.top_bar_input = self.tabs[self.current_tab_index].url.clone();
     }
 
     fn write_current_tab_index(&mut self) -> Result<(), VigiError> {
@@ -62,7 +88,61 @@ impl VigiState {
             .map_err(|_| VigiError::StateUpdate)
     }
 
-    pub fn update_tab(
+    async fn process_input(&mut self) -> Result<(), VigiError> {
+        // TODO: Implement mime type, language, protocol or search detection
+        // TODO: Implement text links parsing
+
+        println!("process_input {{\n  \"{}\"", self.top_bar_input);
+
+        let result = match self.top_bar_input.as_str() {
+            "" => {
+                self.update_tab(TabType::HomePage, "Home".to_owned(), "".to_owned())?;
+
+                self.current_data = vec![Tag::new(
+                    0,
+                    Body::Text("Type something in the address bar".to_owned()),
+                    Argument::Null,
+                )];
+
+                Ok(())
+            }
+            input => match reqwest::get(input).await {
+                Ok(res) => match res.text().await {
+                    Ok(res) => {
+                        let mut truncated = res.clone();
+                        truncated.truncate(50);
+
+                        self.update_tab(TabType::Text, truncated, input.to_owned())?;
+
+                        self.current_data = vec![Tag::new(0, Body::Text(res), Argument::Null)];
+
+                        Ok(())
+                    }
+                    Err(_) => Err(VigiError::Parse),
+                },
+                Err(_) => Err(VigiError::Network),
+            },
+        };
+
+        if result.is_ok() {
+            println!("  Ok\n}}");
+        } else {
+            println!("  Err\n}}");
+        }
+
+        result
+    }
+
+    pub async fn update_input(&mut self, input: String) -> Result<(), VigiError> {
+        self.top_bar_input = input;
+        self.process_input().await
+    }
+
+    pub async fn load_tab(&mut self) -> Result<(), VigiError> {
+        self.process_input().await
+    }
+
+    fn update_tab(
         &mut self,
         tab_type: TabType,
         tab_title: String,
@@ -84,7 +164,7 @@ impl VigiState {
         self.tabs_id_counter += 1;
         self.tabs.push(Tab::new(
             TabType::HomePage,
-            "New tab".to_string(),
+            "Home".to_string(),
             "".to_string(),
             self.tabs_id_counter,
         ));
@@ -94,6 +174,8 @@ impl VigiState {
 
         self.current_tab_index = self.tabs.len() - 1;
         self.write_current_tab_index()?;
+
+        self.update_top_bar_input();
 
         Ok(())
     }
@@ -112,14 +194,25 @@ impl VigiState {
 
         Ok(())
     }
+
+    pub fn get_js_state(&self) -> VigiJsState {
+        VigiJsState {
+            current_tab_index: self.current_tab_index,
+            tabs: self.tabs.clone(),
+            favorites_tabs: self.favorites_tabs.clone(),
+
+            top_bar_input: self.top_bar_input.clone(),
+            current_data: self.current_data.clone(),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Tab {
-    ty: TabType,
-    title: String,
-    url: String,
-    id: usize,
+    pub ty: TabType,
+    pub title: String,
+    pub url: String,
+    pub id: usize,
 }
 
 impl Tab {

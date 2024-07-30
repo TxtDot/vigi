@@ -501,9 +501,9 @@ dependencies = [
 
 [[package]]
 name = "dalet"
-version = "1.0.0-pre2"
+version = "1.0.0-pre3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d7a4c96bc370794e34c34ed93abe3f04140b9909bc80b942b98a9abd7b8c248d"
+checksum = "c629ef0fc95fddd843a73e72de3f509665a73f51323f7b6c1b7946eb8937b660"
 dependencies = [
  "serde",
 ]

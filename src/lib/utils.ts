@@ -1,32 +1,52 @@
 import { invoke } from "@tauri-apps/api";
-import { state, topBarInput } from "./stores";
-import type { StateTab, VigiState } from "./types";
+import { isLoading, state } from "./stores";
+import type { VigiState } from "./types";
 
-export function updateVigiState() {
-  invoke("get_state")
-    .then((r) => {
-      let st = r as VigiState;
+export async function updateVigiState() {
+  try {
+    let st = await invoke("get_js_state");
+    state.set(st as VigiState);
+  } catch (e) {
+    console.log(e);
+  }
+}
 
-      state.set(st);
+export async function updateInput(input: string) {
+  isLoading.set(true);
 
-      topBarInput.set(st.tabs[st.current_tab_index].url);
-    })
-    .catch((err) => console.log(err));
+  try {
+    await invoke("update_input", { input });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    await updateVigiState();
+    isLoading.set(false);
+  }
 }
 
 export async function addTab() {
   await invoke("add_tab");
-
-  updateVigiState();
+  await updateVigiState();
+  await loadTab();
 }
 
 export async function selectTab(index: number) {
   await invoke("select_tab", { index });
-
-  updateVigiState();
+  await updateVigiState();
+  await loadTab();
 }
 
 export async function removeTab(index: number) {
   await invoke("remove_tab", { index });
-  updateVigiState();
+  await updateVigiState();
+  await loadTab();
+}
+
+export async function loadTab() {
+  isLoading.set(true);
+
+  await invoke("load_tab");
+  await updateVigiState();
+
+  isLoading.set(false);
 }

@@ -4,21 +4,21 @@
   import Reload from "$lib/icons/Reload.svelte";
   import SidebarLeft from "$lib/icons/SidebarLeft.svelte";
   import SidebarRight from "$lib/icons/SidebarRight.svelte";
-  import { topBarInput } from "$lib/stores";
+  import { state } from "$lib/stores";
+  import { updateInput } from "$lib/utils";
   import Block from "./Block.svelte";
   import Button from "./Button.svelte";
 
   export let onBack = () => {};
   export let onForward = () => {};
-  export let onInput = () => {};
 
   export let sidebarOpen = true;
 
   let currentInput = "";
   let input = "";
 
-  topBarInput.subscribe((val) => {
-    input = val;
+  state.subscribe((val) => {
+    input = val.top_bar_input;
     currentInput = decodeURIComponent(input);
   });
 
@@ -36,7 +36,7 @@
     </Button>
     <Button onClick={onBack}><ArrowLeft /></Button>
     <Button onClick={onForward}><ArrowRight /></Button>
-    <Button onClick={onInput}><Reload /></Button>
+    <Button onClick={() => updateInput(input)}><Reload /></Button>
   </Block>
 
   <input
@@ -47,8 +47,7 @@
     bind:this={iEl}
     on:keypress={(e) => {
       if (e.key === "Enter") {
-        topBarInput.set(currentInput);
-        onInput();
+        updateInput(currentInput);
       }
     }}
     on:focus={() => {

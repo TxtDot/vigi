@@ -29,7 +29,7 @@
   {#if collapsed}
     <WindowControls />
 
-    <div class="open-tabs">
+    <div class="tabs-category">
       Open tabs
       <Button onClick={addTab}>
         <Add />
