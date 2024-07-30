@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { StateTab } from "$lib/types";
   import { removeTab, selectTab } from "$lib/utils";
-  import { slide } from "svelte/transition";
+  import { fade, slide } from "svelte/transition";
   import Close from "$lib/icons/Close.svelte";
+  import { isLoading } from "$lib/stores";
+  import GooLoad from "$lib/icons/GooLoad.svelte";
 
   export let active = false;
   export let tab: StateTab;
@@ -12,6 +14,11 @@
   let tabElement: HTMLButtonElement;
 
   let hovered = false;
+  let loading = false;
+
+  isLoading.subscribe((val) => {
+    loading = val;
+  });
 </script>
 
 <div
@@ -25,8 +32,10 @@
     <button
       class="close-button"
       transition:slide={{ duration: 100, axis: "x" }}
-      on:click={() => removeTab(id)}><Close /></button
+      on:click={() => removeTab(id)}
     >
+      <Close />
+    </button>
   {/if}
 
   <button
@@ -35,9 +44,19 @@
     transition:slide={{ duration: 100 }}
     bind:this={tabElement}
     on:click={() => {
-      selectTab(id);
+      if (!active) {
+        selectTab(id);
+      }
     }}
   >
-    {tab.title}
+    <div>
+      {#if loading && active}
+        <GooLoad />
+      {/if}
+    </div>
+
+    <div>
+      {tab.title}
+    </div>
   </button>
 </div>

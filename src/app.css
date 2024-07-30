@@ -97,7 +97,7 @@ input::placeholder {
 
   @apply hover:px-4;
 
-  @apply flex items-center justify-between gap-2 w-full truncate;
+  @apply flex items-center gap-2 w-full truncate;
 }
 
 .close-button {

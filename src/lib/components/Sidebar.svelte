@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { slide } from "svelte/transition";
-
   import Block from "./Block.svelte";
   import WindowControls from "./WindowControls.svelte";
   import type { StateTab } from "$lib/types";
