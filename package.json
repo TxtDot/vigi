@@ -1,7 +1,7 @@
 {
   "name": "vigi",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0-pre0",
+  "description": "Browser for dalet, text, gemtext (gemini protocol included) with native support of txtdot proxy and local txtdot engines",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
