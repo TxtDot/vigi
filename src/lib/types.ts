@@ -9,10 +9,7 @@ export interface VigiState {
   current_data: Tag[];
 }
 
-type TabType = "HomePage" | "Text";
-
 export interface StateTab {
-  ty: TabType;
   title: string;
   url: string;
   id: number;

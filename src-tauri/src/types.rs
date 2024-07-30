@@ -1,6 +1,6 @@
 use dalet::{Argument, Body, Tag};
 use serde::{Deserialize, Serialize};
-use std::{fs, path::PathBuf};
+use std::{collections::HashMap, fs, path::PathBuf};
 
 use crate::utils::write_tabs;
 
@@ -32,6 +32,19 @@ pub struct VigiState {
     // Temporary
     pub top_bar_input: String,
     pub current_data: Vec<Tag>,
+    pub cached_inputs: HashMap<String, VigiOutput>,
+}
+
+#[derive(Serialize, Debug, Clone)]
+pub struct VigiOutput {
+    pub title: String,
+    pub data: Vec<Tag>,
+}
+
+impl VigiOutput {
+    pub fn new(title: String, data: Vec<Tag>) -> Self {
+        Self { title, data }
+    }
 }
 
 #[derive(Serialize, Debug, Clone)]
@@ -60,6 +73,7 @@ impl VigiState {
 
             top_bar_input: "".to_string(),
             current_data: Vec::new(),
+            cached_inputs: HashMap::new(),
         }
     }
 
@@ -88,69 +102,72 @@ impl VigiState {
             .map_err(|_| VigiError::StateUpdate)
     }
 
-    async fn process_input(&mut self) -> Result<(), VigiError> {
+    async fn process_input(&mut self, ignore_cache: bool) -> Result<(), VigiError> {
         // TODO: Implement mime type, language, protocol or search detection
         // TODO: Implement text links parsing
 
-        println!("process_input {{\n  \"{}\"", self.top_bar_input);
+        println!("process_input \"{}\"", self.top_bar_input);
 
-        let result = match self.top_bar_input.as_str() {
-            "" => {
-                self.update_tab(TabType::HomePage, "Home".to_owned(), "".to_owned())?;
+        let cached = !ignore_cache && self.cached_inputs.contains_key(&self.top_bar_input);
 
-                self.current_data = vec![Tag::new(
-                    0,
-                    Body::Text("Type something in the address bar".to_owned()),
-                    Argument::Null,
-                )];
+        let output = {
+            if cached {
+                self.cached_inputs.get(&self.top_bar_input).unwrap().clone()
+            } else if self.top_bar_input.starts_with("https://")
+                || self.top_bar_input.starts_with("http://")
+            {
+                let res = reqwest::get(&self.top_bar_input)
+                    .await
+                    .map_err(|_| VigiError::Network)?
+                    .text()
+                    .await
+                    .map_err(|_| VigiError::Network)?;
 
-                Ok(())
+                let mut truncated = res.clone();
+                truncated.truncate(50);
+
+                VigiOutput::new(
+                    truncated,
+                    vec![Tag::new(0, Body::Text(res), Argument::Null)],
+                )
+            } else if self.top_bar_input.is_empty() {
+                VigiOutput::new(
+                    "Homepage".to_owned(),
+                    vec![Tag::new(
+                        0,
+                        Body::Text("Type something in the address bar".to_owned()),
+                        Argument::Null,
+                    )],
+                )
+            } else {
+                todo!();
             }
-            input => match reqwest::get(input).await {
-                Ok(res) => match res.text().await {
-                    Ok(res) => {
-                        let mut truncated = res.clone();
-                        truncated.truncate(50);
-
-                        self.update_tab(TabType::Text, truncated, input.to_owned())?;
-
-                        self.current_data = vec![Tag::new(0, Body::Text(res), Argument::Null)];
-
-                        Ok(())
-                    }
-                    Err(_) => Err(VigiError::Parse),
-                },
-                Err(_) => Err(VigiError::Network),
-            },
         };
 
-        if result.is_ok() {
-            println!("  Ok\n}}");
-        } else {
-            println!("  Err\n}}");
+        self.update_tab(output.title.clone(), self.top_bar_input.clone())?;
+        self.current_data = output.data.clone();
+
+        if !cached {
+            self.cached_inputs
+                .insert(self.top_bar_input.clone(), output);
         }
 
-        result
+        Ok(())
     }
 
     pub async fn update_input(&mut self, input: String) -> Result<(), VigiError> {
         self.top_bar_input = input;
-        self.process_input().await
+        self.process_input(true).await
     }
 
     pub async fn load_tab(&mut self) -> Result<(), VigiError> {
-        self.process_input().await
+        self.process_input(false).await
     }
 
-    fn update_tab(
-        &mut self,
-        tab_type: TabType,
-        tab_title: String,
-        tab_url: String,
-    ) -> Result<(), VigiError> {
+    fn update_tab(&mut self, tab_title: String, tab_url: String) -> Result<(), VigiError> {
         match self.tabs.get_mut(self.current_tab_index) {
             Some(tab) => {
-                *tab = Tab::new(tab_type, tab_title, tab_url, tab.id);
+                *tab = Tab::new(tab_title, tab_url, tab.id);
 
                 write_tabs(&self.local_tabs_path, &self.tabs)?;
 
@@ -163,7 +180,6 @@ impl VigiState {
     pub fn add_tab(&mut self) -> Result<(), VigiError> {
         self.tabs_id_counter += 1;
         self.tabs.push(Tab::new(
-            TabType::HomePage,
             "Home".to_string(),
             "".to_string(),
             self.tabs_id_counter,
@@ -209,20 +225,13 @@ impl VigiState {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Tab {
-    pub ty: TabType,
     pub title: String,
     pub url: String,
     pub id: usize,
 }
 
 impl Tab {
-    pub fn new(ty: TabType, title: String, url: String, id: usize) -> Self {
-        Self { ty, title, url, id }
+    pub fn new(title: String, url: String, id: usize) -> Self {
+        Self { title, url, id }
     }
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub enum TabType {
-    HomePage,
-    Text,
 }

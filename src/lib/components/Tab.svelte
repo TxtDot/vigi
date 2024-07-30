@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { StateTab } from "$lib/types";
   import { removeTab, selectTab } from "$lib/utils";
-  import { fade, slide } from "svelte/transition";
+  import { slide } from "svelte/transition";
   import Close from "$lib/icons/Close.svelte";
   import { isLoading } from "$lib/stores";
   import GooLoad from "$lib/icons/GooLoad.svelte";

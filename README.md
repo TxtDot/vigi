@@ -31,4 +31,4 @@ Browser features:
 - [x] tab closing
 - [x] save and restore tabs
 - [ ] save and restore favorites
-- [ ] cache tab data
+- [x] cache tab data
