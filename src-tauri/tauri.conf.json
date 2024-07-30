@@ -7,13 +7,13 @@
   },
   "package": {
     "productName": "vigi",
-    "version": "1.0.0-pre.0"
+    "version": "1.0.0-0"
   },
   "tauri": {
     "updater": {
       "active": true,
       "endpoints": [
-        "https://raw.githubusercontent.com/TxtDot/vigi/main/latest.json"
+        "https://github.com/txtdot/vigi/releases/latest/download/latest.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEMzQTRGNjZDOTNENzEyREMKUldUY0V0ZVRiUGFrd3h5U0l3c3Z1aTVaNGJHZ3JtK2ZzeDZjeWt4bFF0RjhDT0ZPVjArbWVERGIK"
