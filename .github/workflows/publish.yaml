@@ -30,6 +30,10 @@ jobs:
         with:
           node-version: lts/*
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -50,6 +54,8 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ""
         with:
           tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
           releaseName: "Vigi v__VERSION__"
