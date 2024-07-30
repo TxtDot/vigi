@@ -1,6 +1,6 @@
 [package]
 name = "vigi"
-version = "1.0.0-pre0"
+version = "0.0.0"
 description = "Browser for dalet, text, gemtext (gemini protocol included) with native support of txtdot proxy and local txtdot engines"
 authors = ["artegoser"]
 edition = "2021"

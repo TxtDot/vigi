@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "vigi",
-    "version": "1.0.0-pre0"
+    "version": "1.0.0-pre.0"
   },
   "tauri": {
     "updater": {
