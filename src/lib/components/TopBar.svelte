@@ -1,6 +1,7 @@
 <script lang="ts">
     import ArrowLeft from "$lib/icons/ArrowLeft.svelte";
     import ArrowRight from "$lib/icons/ArrowRight.svelte";
+    import OpenTabs from "$lib/icons/OpenTabs.svelte";
     import Reload from "$lib/icons/Reload.svelte";
     import SidebarLeft from "$lib/icons/SidebarLeft.svelte";
     import SidebarRight from "$lib/icons/SidebarRight.svelte";
@@ -16,27 +17,41 @@
 
     let currentInput = "";
     let input = "";
+    let tabsOpen = 0;
 
     state.subscribe((val) => {
         input = val.top_bar_input;
         currentInput = decodeURIComponent(input);
+        tabsOpen = val.tabs.length;
     });
 
     let iEl: HTMLInputElement;
 </script>
 
 <div class="top-bar">
-    <Block className="flex">
-        <Button onClick={() => (sidebarOpen = !sidebarOpen)}>
+    <Block className="top-bar-buttons">
+        <Button
+            className="hide-sidebar-button"
+            onClick={() => (sidebarOpen = !sidebarOpen)}
+        >
             {#if sidebarOpen}
                 <SidebarLeft />
             {:else}
                 <SidebarRight />
             {/if}
         </Button>
-        <Button onClick={onBack}><ArrowLeft /></Button>
-        <Button onClick={onForward}><ArrowRight /></Button>
-        <Button onClick={() => updateAndLoadInput(input)}><Reload /></Button>
+        <Button className="back-button" onClick={onBack}><ArrowLeft /></Button>
+        <Button className="forward-button" onClick={onForward}>
+            <ArrowRight />
+        </Button>
+        <Button
+            className="reload-button"
+            onClick={() => updateAndLoadInput(input)}
+        >
+            <Reload />
+        </Button>
+
+        <Button className="open-tabs-page-button"><OpenTabs /></Button>
     </Block>
 
     <input

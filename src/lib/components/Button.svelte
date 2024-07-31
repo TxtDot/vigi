@@ -1,7 +1,8 @@
 <script>
-  export let onClick = () => {};
+    export let onClick = () => {};
+    export let className = "";
 </script>
 
-<button class="button" on:click={onClick}>
-  <slot />
+<button class={`button${className ? " " + className : ""}`} on:click={onClick}>
+    <slot />
 </button>

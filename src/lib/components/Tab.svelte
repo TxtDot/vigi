@@ -39,7 +39,7 @@
     {/if}
 
     <button
-        class={`tab${loading && active ? " animate-pulse" : ""}`}
+        class={`tab${loading && active ? " loading" : ""}`}
         class:active
         transition:slide={{ duration: 100 }}
         bind:this={tabElement}
