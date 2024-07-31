@@ -30,13 +30,11 @@
 </script>
 
 <Block className="browser-window">
-  <div>
-    {#if loading}
-      <div transition:slide>
-        <GooLoadSpin />
-      </div>
-    {/if}
+  {#if loading}
+    <div transition:slide>
+      <GooLoadSpin />
+    </div>
+  {/if}
 
-    <Renderer {data} />
-  </div>
+  <Renderer {data} />
 </Block>

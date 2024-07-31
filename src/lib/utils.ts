@@ -7,7 +7,7 @@ export async function updateVigiState() {
     let st = await invoke("get_js_state");
     state.set(st as VigiState);
   } catch (e) {
-    console.log(e);
+    writeError(e);
   }
 }
 
@@ -16,10 +16,10 @@ export async function updateInput(input: string) {
 
   try {
     await invoke("update_input", { input });
-  } catch (e) {
-    console.log(e);
-  } finally {
     await updateVigiState();
+  } catch (e) {
+    writeError(e, input);
+  } finally {
     isLoading.set(false);
   }
 }
@@ -45,8 +45,22 @@ export async function removeTab(index: number) {
 export async function loadTab() {
   isLoading.set(true);
 
-  await invoke("load_tab");
-  await updateVigiState();
+  try {
+    await invoke("load_tab");
+    await updateVigiState();
+  } catch (e) {
+    writeError(e);
+  } finally {
+    isLoading.set(false);
+  }
+}
 
-  isLoading.set(false);
+function writeError(e: unknown, input?: string) {
+  state.update((st) => {
+    st.current_data = [{ id: 0, body: `Error: ${e}`, argument: null }];
+
+    if (input) st.top_bar_input = input;
+
+    return st;
+  });
 }

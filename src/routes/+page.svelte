@@ -27,7 +27,7 @@
     ) {
       return;
     }
-    if (e.key === "q") sidebarOpen = !sidebarOpen;
+    if (e.code === "KeyQ") sidebarOpen = !sidebarOpen;
   });
 </script>
 

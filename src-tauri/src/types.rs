@@ -140,7 +140,7 @@ impl VigiState {
                     )],
                 )
             } else {
-                todo!();
+                Err(VigiError::Parse)?
             }
         };
 

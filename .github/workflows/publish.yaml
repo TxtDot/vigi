@@ -58,7 +58,7 @@ jobs:
           TAURI_KEY_PASSWORD: ""
         with:
           tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
-          releaseName: "Vigi v__VERSION__"
+          releaseName: "vigi v__VERSION__"
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false

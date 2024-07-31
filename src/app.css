@@ -2,109 +2,195 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --min: #96e28a;
-  --max: #193815;
+/* Theme */
 
-  /* --min: #8a9fe2;
-  --max: #151a38; */
+:root {
+    /* Theme Colors */
+    /* Green */
+    --min-bg: #96e28a;
+    --max-bg: #193815;
+
+    --max-text: #bef5b5;
+    --min-text: #fff;
+
+    /* Dark */
+    /* --min: #818181;
+    --max: #000; */
+
+    /* Blue */
+    /* --min: #8a9fe2;
+    --max: #151a38; */
+
+    /* Red */
+    /* --min: #e28a8a;
+    --max: #641515; */
+    /* End Theme Colors */
 }
 
+/* Theme Classes */
+.color-vigi-0 {
+    @apply text-vigi-0 bg-vigi-0;
+}
+.color-vigi-5 {
+    @apply text-vigi-5 bg-vigi-5;
+}
+.color-vigi-10 {
+    @apply text-vigi-10 bg-vigi-10;
+}
+.color-vigi-15 {
+    @apply text-vigi-15 bg-vigi-15;
+}
+.color-vigi-20 {
+    @apply text-vigi-20 bg-vigi-20;
+}
+.color-vigi-25 {
+    @apply text-vigi-25 bg-vigi-25;
+}
+.color-vigi-30 {
+    @apply text-vigi-30 bg-vigi-30;
+}
+.color-vigi-35 {
+    @apply text-vigi-35 bg-vigi-35;
+}
+.color-vigi-40 {
+    @apply text-vigi-40 bg-vigi-40;
+}
+.color-vigi-45 {
+    @apply text-vigi-45 bg-vigi-45;
+}
+.color-vigi-50 {
+    @apply text-vigi-50 bg-vigi-50;
+}
+.color-vigi-55 {
+    @apply text-vigi-55 bg-vigi-55;
+}
+.color-vigi-60 {
+    @apply text-vigi-60 bg-vigi-60;
+}
+.color-vigi-65 {
+    @apply text-vigi-65 bg-vigi-65;
+}
+.color-vigi-70 {
+    @apply text-vigi-70 bg-vigi-70;
+}
+.color-vigi-75 {
+    @apply text-vigi-75 bg-vigi-75;
+}
+.color-vigi-80 {
+    @apply text-vigi-80 bg-vigi-80;
+}
+.color-vigi-85 {
+    @apply text-vigi-85 bg-vigi-85;
+}
+.color-vigi-90 {
+    @apply text-vigi-90 bg-vigi-90;
+}
+.color-vigi-95 {
+    @apply text-vigi-95 bg-vigi-95;
+}
+.color-vigi-100 {
+    @apply text-vigi-100 bg-vigi-100;
+}
+/* End Theme Classes */
+/* End theme */
+/* Components */
+
 body {
-  @apply bg-vigi-90 text-vigi-10 cursor-default;
-  user-select: none;
+    @apply bg-vigi-90 text-vigi-10 cursor-default;
+    user-select: none;
 }
 
 .common-window {
-  @apply p-3 gap-3 w-screen h-screen;
-  @apply flex;
+    @apply p-3 gap-3 w-screen h-screen;
+    @apply flex;
 
-  @apply ease-out duration-100;
+    @apply ease-out duration-100;
 }
 
 .common-window.collapsed {
-  @apply gap-0;
+    @apply gap-0;
 }
 
 .main-window {
-  @apply grow flex flex-col gap-3;
+    @apply grow flex flex-col gap-3;
 }
 
 .browser-window {
-  @apply grow shadow-inner overflow-auto select-text cursor-auto;
+    @apply grow overflow-auto select-text cursor-auto;
 }
 
 .window-controls {
-  @apply flex justify-start;
+    @apply flex justify-start;
 }
 
 .button {
-  @apply p-1 rounded-lg;
-  @apply ease-out duration-150;
+    @apply p-1 rounded-lg;
+    @apply ease-out duration-150;
 
-  @apply hover:bg-vigi-90;
-  @apply hover:px-2 hover:mx-1 hover:scale-125 cursor-pointer;
+    @apply hover:bg-vigi-90;
+    @apply hover:px-2 hover:mx-1 hover:scale-125 cursor-pointer;
 
-  @apply active:bg-vigi-100;
+    @apply active:bg-vigi-100;
 }
 
 .tabs-category {
-  @apply flex justify-between mt-2 mx-2;
+    @apply flex justify-between mt-2 mx-2;
 }
 
 .block {
-  @apply p-2 rounded-xl bg-vigi-60;
+    @apply p-2 rounded-xl bg-vigi-60;
 }
 
 .sidebar {
-  @apply shrink-0 grow-0 flex flex-col w-1/5;
-  @apply ease-out duration-100;
+    @apply shrink-0 grow-0 flex flex-col w-1/5;
+    @apply ease-out duration-300;
 }
 
 .sidebar.collapsed {
-  @apply basis-0;
+    @apply basis-0;
 
-  @apply p-0 m-0 bg-transparent;
+    @apply p-0 m-0;
+    @apply overflow-hidden;
 }
 
 .top-bar {
-  @apply flex;
+    @apply flex;
 }
 
 .search-input {
-  @apply ms-2 px-2 py-1 rounded-xl grow;
+    @apply ms-2 px-2 py-1 rounded-xl grow;
 
-  @apply bg-vigi-60 outline-none;
-  @apply focus:bg-vigi-50 focus:text-vigi-0 hover:bg-vigi-55;
+    @apply bg-vigi-60 outline-none;
+    @apply focus:bg-vigi-50 focus:text-vigi-0 hover:bg-vigi-55;
 
-  @apply ease-out duration-100;
+    @apply ease-out duration-100;
 }
 
 input::placeholder {
-  @apply text-vigi-40 focus:text-vigi-20;
+    @apply text-vigi-40 focus:text-vigi-20;
 }
 
 .tabs {
-  @apply flex flex-col gap-1 mt-2 grow overflow-auto;
+    @apply flex flex-col-reverse gap-1 mt-2 grow overflow-auto justify-end;
 }
 
 .tab {
-  @apply p-2 rounded-xl bg-vigi-50;
-  @apply cursor-pointer;
-  @apply ease-out duration-100;
+    @apply p-2 rounded-xl bg-vigi-50;
+    @apply cursor-pointer;
+    @apply ease-out duration-100;
 
-  @apply hover:bg-vigi-55;
+    @apply hover:bg-vigi-55;
 
-  @apply hover:px-4;
+    @apply hover:px-4;
 
-  @apply flex items-center gap-2 w-full truncate;
+    @apply flex items-center gap-2 w-full truncate;
 }
 
 .close-button {
-  @apply p-1 rounded-lg;
-  @apply ease-out duration-100;
+    @apply p-1 rounded-lg;
+    @apply ease-out duration-100;
 
-  @apply hover:bg-vigi-90 active:bg-vigi-100;
+    @apply hover:bg-vigi-90 active:bg-vigi-100;
 }
 
 /* .tab .close-button {
@@ -116,33 +202,33 @@ input::placeholder {
 } */
 
 .tab.active {
-  @apply bg-vigi-40 text-vigi-0 font-bold;
+    @apply bg-vigi-40 text-vigi-0 font-bold;
 
-  @apply hover:bg-vigi-45;
+    @apply hover:bg-vigi-45;
 }
 
 ::selection {
-  @apply bg-vigi-60;
+    @apply bg-vigi-60;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 15px;
+    width: 15px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+    @apply bg-transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply rounded-xl bg-vigi-70 bg-clip-content;
-  border: 6px solid transparent;
+    @apply rounded-xl bg-vigi-70 bg-clip-content;
+    border: 6px solid transparent;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-vigi-75;
-  border: 5px solid transparent;
+    @apply bg-vigi-75;
+    border: 5px solid transparent;
 }
