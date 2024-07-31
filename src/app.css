@@ -10,8 +10,10 @@
     --min-bg: #96e28a;
     --max-bg: #193815;
 
-    --max-text: #bef5b5;
-    --min-text: #fff;
+    --min-text: #bef5b5;
+    --max-text: #fff;
+
+    --colorspace: oklch;
 
     /* Dark */
     /* --min: #818181;

@@ -10,13 +10,28 @@ use tauri::async_runtime::Mutex;
 use types::{VigiError, VigiJsState, VigiState};
 use utils::{read_or_create_jsonl, read_or_create_number};
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 async fn update_input(
     input: String,
     state: tauri::State<'_, Mutex<VigiState>>,
 ) -> Result<(), VigiError> {
-    state.lock().await.update_input(input).await
+    state.lock().await.update_input(input);
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn load_input(state: tauri::State<'_, Mutex<VigiState>>) -> Result<(), VigiError> {
+    state.lock().await.load_input().await?;
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn load_input_force(state: tauri::State<'_, Mutex<VigiState>>) -> Result<(), VigiError> {
+    state.lock().await.load_input_force().await?;
+
+    Ok(())
 }
 
 #[tauri::command]
@@ -29,17 +44,12 @@ async fn select_tab(
     index: usize,
     state: tauri::State<'_, Mutex<VigiState>>,
 ) -> Result<(), VigiError> {
-    state.lock().await.select_tab(index).await
-}
-
-#[tauri::command]
-async fn load_tab(state: tauri::State<'_, Mutex<VigiState>>) -> Result<(), VigiError> {
-    state.lock().await.load_tab().await
+    state.lock().await.select_tab(index)
 }
 
 #[tauri::command]
 async fn add_tab(state: tauri::State<'_, Mutex<VigiState>>) -> Result<(), VigiError> {
-    state.lock().await.add_tab()
+    state.lock().await.add_tab().await
 }
 
 #[tauri::command]
@@ -57,10 +67,11 @@ fn main() {
             update_input,
             get_js_state,
             select_tab,
-            load_tab,
             add_tab,
             remove_tab,
-            setup
+            setup,
+            load_input,
+            load_input_force
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -120,7 +131,7 @@ async fn setup(
     state.current_tab_index_path = local_data_dir.join("current_tab_index");
     state.current_tab_index = read_or_create_number(&state.current_tab_index_path);
 
-    state.update_top_bar_input();
+    state.update_top_bar_input()?;
 
     println!("---Setup done---");
 

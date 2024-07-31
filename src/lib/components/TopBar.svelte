@@ -5,7 +5,7 @@
     import SidebarLeft from "$lib/icons/SidebarLeft.svelte";
     import SidebarRight from "$lib/icons/SidebarRight.svelte";
     import { state } from "$lib/stores";
-    import { updateInput } from "$lib/utils";
+    import { updateAndLoadInput } from "$lib/utils";
     import Block from "./Block.svelte";
     import Button from "./Button.svelte";
 
@@ -36,7 +36,7 @@
         </Button>
         <Button onClick={onBack}><ArrowLeft /></Button>
         <Button onClick={onForward}><ArrowRight /></Button>
-        <Button onClick={() => updateInput(input)}><Reload /></Button>
+        <Button onClick={() => updateAndLoadInput(input)}><Reload /></Button>
     </Block>
 
     <input
@@ -47,7 +47,7 @@
         bind:this={iEl}
         on:keypress={(e) => {
             if (e.key === "Enter") {
-                updateInput(currentInput);
+                updateAndLoadInput(currentInput);
                 iEl.blur();
             }
         }}

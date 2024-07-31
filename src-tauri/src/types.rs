@@ -12,6 +12,7 @@ pub enum VigiError {
     StateUpdate,
     Filesystem,
     Config,
+    GetTab,
 }
 
 #[derive(Serialize, Debug, Clone)]
@@ -77,24 +78,33 @@ impl VigiState {
         }
     }
 
-    pub async fn select_tab(&mut self, new_index: usize) -> Result<(), VigiError> {
-        self.current_tab_index = new_index;
-        self.write_current_tab_index()?;
-
-        self.update_top_bar_input();
+    pub fn select_tab(&mut self, new_index: usize) -> Result<(), VigiError> {
+        self.update_current_tab_index(new_index)?;
+        self.update_top_bar_input()?;
         Ok(())
     }
 
-    pub fn update_top_bar_input(&mut self) {
-        self.top_bar_input = self.tabs[self.current_tab_index].url.clone();
-    }
+    fn update_current_tab_index(&mut self, new_index: usize) -> Result<(), VigiError> {
+        self.current_tab_index = new_index;
 
-    fn write_current_tab_index(&mut self) -> Result<(), VigiError> {
         fs::write(
             &self.current_tab_index_path,
             self.current_tab_index.to_string(),
         )
-        .map_err(|_| VigiError::StateUpdate)
+        .map_err(|_| VigiError::StateUpdate)?;
+
+        Ok(())
+    }
+
+    pub fn update_top_bar_input(&mut self) -> Result<(), VigiError> {
+        self.top_bar_input = self
+            .tabs
+            .get(self.current_tab_index)
+            .ok_or(VigiError::StateUpdate)?
+            .url
+            .clone();
+
+        Ok(())
     }
 
     fn write_id_counter(&mut self) -> Result<(), VigiError> {
@@ -155,12 +165,15 @@ impl VigiState {
         Ok(())
     }
 
-    pub async fn update_input(&mut self, input: String) -> Result<(), VigiError> {
+    pub fn update_input(&mut self, input: String) {
         self.top_bar_input = input;
+    }
+
+    pub async fn load_input_force(&mut self) -> Result<(), VigiError> {
         self.process_input(true).await
     }
 
-    pub async fn load_tab(&mut self) -> Result<(), VigiError> {
+    pub async fn load_input(&mut self) -> Result<(), VigiError> {
         self.process_input(false).await
     }
 
@@ -177,7 +190,7 @@ impl VigiState {
         }
     }
 
-    pub fn add_tab(&mut self) -> Result<(), VigiError> {
+    pub async fn add_tab(&mut self) -> Result<(), VigiError> {
         self.tabs_id_counter += 1;
         self.tabs.push(Tab::new(
             "Home".to_string(),
@@ -188,22 +201,21 @@ impl VigiState {
         self.write_id_counter()?;
         write_tabs(&self.local_tabs_path, &self.tabs)?;
 
-        self.current_tab_index = self.tabs.len() - 1;
-        self.write_current_tab_index()?;
-
-        self.update_top_bar_input();
+        self.select_tab(self.tabs.len() - 1)?;
+        self.load_input().await?;
 
         Ok(())
     }
 
     pub fn remove_tab(&mut self, index: usize) -> Result<(), VigiError> {
-        if self.tabs.len() - 1 == index && self.current_tab_index == index {
+        if self.current_tab_index >= index {
             if self.current_tab_index > 0 {
-                self.current_tab_index -= 1;
-
-                self.write_current_tab_index()?;
+                self.select_tab(self.current_tab_index - 1)?;
             }
         }
+
+        self.cached_inputs
+            .remove(&self.tabs.get(index).ok_or(VigiError::GetTab)?.url);
 
         self.tabs.remove(index);
         write_tabs(&self.local_tabs_path, &self.tabs)?;

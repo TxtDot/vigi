@@ -11,11 +11,14 @@ export async function updateVigiState() {
   }
 }
 
-export async function updateInput(input: string) {
+export async function updateAndLoadInput(input: string) {
+  await invoke("update_input", { input });
+  await updateVigiState();
+
   isLoading.set(true);
 
   try {
-    await invoke("update_input", { input });
+    await invoke("load_input_force");
     await updateVigiState();
   } catch (e) {
     writeError(e, input);
@@ -27,26 +30,25 @@ export async function updateInput(input: string) {
 export async function addTab() {
   await invoke("add_tab");
   await updateVigiState();
-  await loadTab();
 }
 
 export async function selectTab(index: number) {
   await invoke("select_tab", { index });
   await updateVigiState();
-  await loadTab();
+  await loadInput();
 }
 
 export async function removeTab(index: number) {
   await invoke("remove_tab", { index });
   await updateVigiState();
-  await loadTab();
+  setTimeout(loadInput, 150);
 }
 
-export async function loadTab() {
+export async function loadInput() {
   isLoading.set(true);
 
   try {
-    await invoke("load_tab");
+    await invoke("load_input");
     await updateVigiState();
   } catch (e) {
     writeError(e);
