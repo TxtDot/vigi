@@ -3,6 +3,7 @@
 
 use std::fs::{self};
 
+mod process_input;
 mod types;
 mod utils;
 

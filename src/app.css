@@ -68,6 +68,11 @@ body {
     @apply flex justify-between mt-2 mx-2;
 }
 
+.tabs-category-text {
+    @apply overflow-hidden;
+    white-space: nowrap;
+}
+
 .block {
     @apply p-2 rounded-xl color-vigi-60;
 }
@@ -76,18 +81,18 @@ body {
     @apply shrink-0 grow-0 flex flex-col w-1/5;
     @apply ease-out duration-300;
 
-    @apply max-sm:hidden;
+    @apply max-md:hidden;
 }
 
 .sidebar.collapsed {
-    @apply basis-0;
+    @apply basis-0 w-0;
 
     @apply p-0 m-0;
     @apply overflow-hidden;
 }
 
 .top-bar {
-    @apply flex max-sm:flex-row-reverse gap-3;
+    @apply flex max-md:flex-row-reverse gap-3;
 }
 
 .top-bar-buttons {
@@ -97,11 +102,11 @@ body {
 .hide-sidebar-button,
 .back-button,
 .forward-button {
-    @apply max-sm:hidden;
+    @apply max-md:hidden;
 }
 
 .open-tabs-page-button {
-    @apply sm:hidden;
+    @apply md:hidden;
 }
 
 .search-input {
@@ -116,6 +121,7 @@ body {
 input::placeholder {
     @apply color-vigi-60;
     @apply focus:color-vigi-50 hover:color-vigi-55;
+    @apply ease-out duration-100;
 }
 
 .tabs {

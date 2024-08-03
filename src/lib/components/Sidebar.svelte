@@ -7,6 +7,7 @@
     import { addTab } from "$lib/utils";
     import Button from "./Button.svelte";
     import Add from "$lib/icons/Add.svelte";
+    import { fade } from "svelte/transition";
 
     export let collapsed = true;
 
@@ -24,20 +25,18 @@
 </script>
 
 <Block className={`sidebar${collapsed ? "" : " collapsed"}`} draggable>
-    {#if collapsed}
-        <WindowControls />
+    <WindowControls />
 
-        <div class="tabs-category">
-            Open tabs
-            <Button onClick={addTab}>
-                <Add />
-            </Button>
-        </div>
+    <div class="tabs-category">
+        <div class="tabs-category-text">Open tabs</div>
+        <Button onClick={addTab}>
+            <Add />
+        </Button>
+    </div>
 
-        <div class="tabs">
-            {#each tabs as tab, i (tab.id)}
-                <Tab {tab} active={currentTabIndex === i} index={i} />
-            {/each}
-        </div>
-    {/if}
+    <div class="tabs">
+        {#each tabs as tab, i (tab.id)}
+            <Tab {tab} active={currentTabIndex === i} index={i} />
+        {/each}
+    </div>
 </Block>

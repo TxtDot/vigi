@@ -1,8 +1,11 @@
-use dalet::{Argument, Body, Tag};
+use dalet::daletl::{Tag, ToDaletlPage};
+use dalet::typed::Tag::*;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fs, path::PathBuf};
 
 use crate::utils::write_tabs;
+
+use crate::process_input::process_input;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum VigiError {
@@ -13,9 +16,15 @@ pub enum VigiError {
     Filesystem,
     Config,
     GetTab,
+
+    UnsupportedProtocol,
+    UnsupportedMimeType,
+    InvalidMimeType,
+
+    TextIsNotUtf8,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct VigiState {
     pub tabs_id_counter_path: PathBuf,
     pub current_tab_index_path: PathBuf,
@@ -36,7 +45,7 @@ pub struct VigiState {
     pub cached_inputs: HashMap<String, VigiOutput>,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct VigiOutput {
     pub title: String,
     pub data: Vec<Tag>,
@@ -113,9 +122,6 @@ impl VigiState {
     }
 
     async fn process_input(&mut self, ignore_cache: bool) -> Result<(), VigiError> {
-        // TODO: Implement mime type, language, protocol or search detection
-        // TODO: Implement text links parsing
-
         println!("process_input \"{}\"", self.top_bar_input);
 
         let cached = !ignore_cache && self.cached_inputs.contains_key(&self.top_bar_input);
@@ -123,34 +129,13 @@ impl VigiState {
         let output = {
             if cached {
                 self.cached_inputs.get(&self.top_bar_input).unwrap().clone()
-            } else if self.top_bar_input.starts_with("https://")
-                || self.top_bar_input.starts_with("http://")
-            {
-                let res = reqwest::get(&self.top_bar_input)
-                    .await
-                    .map_err(|_| VigiError::Network)?
-                    .text()
-                    .await
-                    .map_err(|_| VigiError::Network)?;
-
-                let mut truncated = res.clone();
-                truncated.truncate(50);
-
-                VigiOutput::new(
-                    truncated,
-                    vec![Tag::new(0, Body::Text(res), Argument::Null)],
-                )
             } else if self.top_bar_input.is_empty() {
                 VigiOutput::new(
                     "Homepage".to_owned(),
-                    vec![Tag::new(
-                        0,
-                        Body::Text("Type something in the address bar".to_owned()),
-                        Argument::Null,
-                    )],
+                    vec![El("Type something in the address bar".into())].to_dl_page(),
                 )
             } else {
-                Err(VigiError::Parse)?
+                process_input(&self.top_bar_input).await?
             }
         };
 
