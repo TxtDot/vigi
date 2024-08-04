@@ -21,7 +21,7 @@ pub enum VigiError {
     UnsupportedMimeType,
     InvalidMimeType,
 
-    TextIsNotUtf8,
+    InvalidCharset,
 }
 
 #[derive(Debug, Clone)]

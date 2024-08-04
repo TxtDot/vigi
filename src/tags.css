@@ -1,0 +1,65 @@
+.headings {
+    @apply font-bold my-4;
+}
+
+.h1 {
+    @apply text-3xl headings;
+}
+
+.h2 {
+    @apply text-2xl headings;
+}
+
+.h3 {
+    @apply text-xl headings;
+}
+
+.h4 {
+    @apply text-lg headings;
+}
+
+.h5 {
+    @apply text-base headings;
+}
+
+.h6 {
+    @apply text-sm headings;
+}
+
+.p {
+    @apply my-3;
+}
+
+.btn,
+.navbtn {
+    @apply p-1 rounded-lg;
+    @apply ease-out duration-150;
+
+    @apply hover:color-vigi-90;
+    @apply cursor-pointer;
+
+    @apply color-vigi-70 active:color-vigi-100;
+}
+
+.link,
+.navlink {
+    @apply underline font-semibold;
+    /* @apply text-bg-vigi-90 hover:text-bg-vigi-95 active:text-bg-vigi-100; */
+    @apply text-vigi-30 hover:text-vigi-20 active:text-vigi-0;
+}
+
+.ul {
+    @apply list-disc list-inside ms-3;
+}
+
+.pre {
+    @apply font-mono;
+}
+
+.code {
+    @apply color-vigi-50 p-4 rounded-xl overflow-auto;
+}
+
+.bq {
+    @apply color-vigi-50 p-4 rounded-xl border-s-4 text-wrap;
+}

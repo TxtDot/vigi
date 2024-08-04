@@ -258,9 +258,9 @@ checksum = "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b"
 
 [[package]]
 name = "bytes"
-version = "1.6.1"
+version = "1.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a12916984aab3fa6e39d655a33e09c0071eb36d6ab3aea5c2d78551f1df6d952"
+checksum = "8318a53db07bb3f8dca91a600466bdb3f2eaadeedfdbcf02e1accbad9271ba50"
 dependencies = [
  "serde",
 ]
@@ -603,9 +603,9 @@ dependencies = [
 
 [[package]]
 name = "dalet"
-version = "1.0.0-pre6"
+version = "1.0.0-pre9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8bc4c347533f8341633bd820799dea680f600e50891310b74bc914740681e8c2"
+checksum = "2095f83b5256dc9a981639c3250aba53c02736a3601c1e6b2c54c27ec786274a"
 dependencies = [
  "clap",
  "enum-procs",
@@ -3094,6 +3094,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "signal-hook-registry"
+version = "1.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a9e9e0b4211b72e7b8b6e85c807d36c212bdb33ea8587f7569562a84df5465b1"
+dependencies = [
+ "libc",
+]
+
+[[package]]
 name = "simd-adler32"
 version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3685,8 +3694,11 @@ dependencies = [
  "bytes",
  "libc",
  "mio",
+ "parking_lot",
  "pin-project-lite",
+ "signal-hook-registry",
  "socket2",
+ "tokio-macros",
  "windows-sys 0.52.0",
 ]
 
@@ -3702,6 +3714,17 @@ dependencies = [
  "tokio-rustls",
  "url",
  "webpki-roots",
+]
+
+[[package]]
+name = "tokio-macros"
+version = "2.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "693d596312e88961bc67d7f1f97af8a70227d9f90c31bba5806eec004978d752"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.72",
 ]
 
 [[package]]
@@ -4006,6 +4029,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 name = "vigi"
 version = "0.0.0"
 dependencies = [
+ "bytes",
  "dalet",
  "mime",
  "reqwest 0.12.5",
@@ -4013,7 +4037,9 @@ dependencies = [
  "serde_json",
  "tauri",
  "tauri-build",
+ "tokio",
  "tokio-gemini",
+ "tokio-rustls",
  "url",
 ]
 

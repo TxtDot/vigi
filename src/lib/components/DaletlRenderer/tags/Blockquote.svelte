@@ -5,6 +5,6 @@
     export let tag: Tag;
 </script>
 
-<section class="el">
+<div class="bq">
     <BodyRenderer body={tag.body} />
-</section>
+</div>

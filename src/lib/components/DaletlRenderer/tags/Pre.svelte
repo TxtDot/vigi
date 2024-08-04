@@ -3,8 +3,7 @@
     import BodyRenderer from "../BodyRenderer.svelte";
 
     export let tag: Tag;
+    export let body = tag.body as string;
 </script>
 
-<section class="el">
-    <BodyRenderer body={tag.body} />
-</section>
+<pre class="pre">{body}</pre>

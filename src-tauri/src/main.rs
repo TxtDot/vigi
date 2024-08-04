@@ -7,7 +7,7 @@ mod process_input;
 mod types;
 mod utils;
 
-use tauri::async_runtime::Mutex;
+use tokio::sync::Mutex;
 use types::{VigiError, VigiJsState, VigiState};
 use utils::{read_or_create_jsonl, read_or_create_number};
 

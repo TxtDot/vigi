@@ -5,6 +5,6 @@
     export let tag: Tag;
 </script>
 
-<section class="el">
-    <BodyRenderer body={tag.body} />
-</section>
+<button class="navlink">
+    <BodyRenderer body={tag.body} ifNull={tag.argument} />
+</button>

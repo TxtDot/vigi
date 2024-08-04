@@ -1,3 +1,5 @@
+@import "tags.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,14 +14,14 @@
     --min-bg: #96e28a;
     --max-bg: #193815;
 
-    --min-text: #bef5b5;
+    --min-text: #82de73;
     --max-text: #fff;
 
     /* Dark */
     /* --min-bg: #555;
     --max-bg: #000;
 
-    --min-text: #cfcfcf;
+    --min-text: #555;
     --max-text: #fff; */
 }
 
@@ -27,7 +29,7 @@
 /* Components */
 
 body {
-    @apply color-vigi-90 cursor-default;
+    @apply color-vigi-90 cursor-default overflow-clip;
     user-select: none;
 }
 
@@ -43,11 +45,11 @@ body {
 }
 
 .main-window {
-    @apply grow flex flex-col gap-3;
+    @apply grow flex flex-col gap-3 w-3/4;
 }
 
 .browser-window {
-    @apply grow overflow-auto text-wrap select-text cursor-auto;
+    @apply grow overflow-y-auto text-wrap select-text cursor-auto overflow-x-hidden;
 }
 
 .window-controls {
@@ -110,7 +112,7 @@ body {
 }
 
 .search-input {
-    @apply px-2 py-1 rounded-xl grow;
+    @apply px-2 py-1 rounded-xl grow min-w-0;
 
     @apply color-vigi-60 outline-none;
     @apply focus:color-vigi-50 hover:color-vigi-55;
@@ -160,24 +162,26 @@ input::placeholder {
     @apply color-vigi-60;
 }
 
-/* width */
 ::-webkit-scrollbar {
     width: 15px;
+    height: 15px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     @apply bg-transparent;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     @apply rounded-xl color-vigi-70 bg-clip-content;
     border: 6px solid transparent;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     @apply color-vigi-75;
     border: 5px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:active {
+    @apply color-vigi-100;
+    border: 4px solid transparent;
 }
