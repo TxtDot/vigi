@@ -1,10 +1,10 @@
+use crate::types::VigiError;
 use bytes::Bytes;
+use insecure_gemini_client::insecure_gemini_client_config;
 use mime::Mime;
 use reqwest::header::CONTENT_TYPE;
 use tokio::io::AsyncReadExt;
 use url::Url;
-
-use crate::types::VigiError;
 
 use super::{insecure_gemini_client, ReqResult};
 
@@ -40,7 +40,7 @@ async fn process_http(url: String) -> Result<ReqResult, VigiError> {
 }
 
 async fn process_gemini(url: String) -> Result<ReqResult, VigiError> {
-    let mut res = insecure_gemini_client::insecure_gemini_client()
+    let mut res = tokio_gemini::Client::from(insecure_gemini_client_config())
         .request(&url)
         .await
         .map_err(|_| VigiError::Network)?;

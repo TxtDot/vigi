@@ -1,30 +1,20 @@
-import { invoke } from "@tauri-apps/api";
+import { invoke as inv } from "@tauri-apps/api";
 import { isLoading, state } from "./stores";
 import type { VigiState } from "./types";
+import { get } from "svelte/store";
+import type { InvokeArgs } from "@tauri-apps/api/tauri";
 
 export async function updateVigiState() {
-  try {
-    let st = await invoke("get_js_state");
-    state.set(st as VigiState);
-  } catch (e) {
-    writeError(e);
-  }
+  let st = await invoke("get_js_state");
+  state.set(st as VigiState);
 }
 
-export async function updateAndLoadInput(input: string) {
-  await invoke("update_input", { input });
+export async function updateAndLoadInput(input: string, newTab?: boolean) {
+  await invoke("update_input", { input, newTab: !!newTab });
   await updateVigiState();
 
-  isLoading.set(true);
-
-  try {
-    await invoke("load_input_force");
-    await updateVigiState();
-  } catch (e) {
-    writeError(e, input);
-  } finally {
-    isLoading.set(false);
-  }
+  await invoke("load_input_force");
+  await updateVigiState();
 }
 
 export async function addTab() {
@@ -45,16 +35,14 @@ export async function removeTab(index: number) {
 }
 
 export async function loadInput() {
-  isLoading.set(true);
+  await invoke("load_input");
+  await updateVigiState();
+}
 
-  try {
-    await invoke("load_input");
-    await updateVigiState();
-  } catch (e) {
-    writeError(e);
-  } finally {
-    isLoading.set(false);
-  }
+export async function goToLink(link: string, newTab?: boolean) {
+  const top_bar_input = get(state).top_bar_input;
+  const new_input = new URL(link, top_bar_input);
+  await updateAndLoadInput(new_input.toString(), newTab);
 }
 
 function writeError(e: unknown, input?: string) {
@@ -65,4 +53,17 @@ function writeError(e: unknown, input?: string) {
 
     return st;
   });
+}
+
+export async function invoke(f: string, args?: InvokeArgs): Promise<unknown> {
+  isLoading.set(true);
+  try {
+    let result = await inv(f, args);
+    isLoading.set(false);
+    return result;
+  } catch (e) {
+    writeError(e);
+    isLoading.set(false);
+    throw new Error("Invoke failed");
+  }
 }

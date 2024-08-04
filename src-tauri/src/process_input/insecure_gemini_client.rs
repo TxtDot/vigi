@@ -4,13 +4,11 @@ use tokio_rustls::rustls::{
 };
 
 /// TODO: update to secure version when supported
-pub fn insecure_gemini_client() -> tokio_gemini::Client {
-    tokio_gemini::Client::from(
-        ClientConfig::builder()
-            .dangerous()
-            .with_custom_certificate_verifier(std::sync::Arc::new(NoCertVerification {}))
-            .with_no_client_auth(),
-    )
+pub fn insecure_gemini_client_config() -> ClientConfig {
+    ClientConfig::builder()
+        .dangerous()
+        .with_custom_certificate_verifier(std::sync::Arc::new(NoCertVerification {}))
+        .with_no_client_auth()
 }
 
 #[derive(Debug)]

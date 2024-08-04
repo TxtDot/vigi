@@ -150,8 +150,14 @@ impl VigiState {
         Ok(())
     }
 
-    pub fn update_input(&mut self, input: String) {
+    pub async fn update_input(&mut self, input: String, new_tab: bool) -> Result<(), VigiError> {
+        if new_tab {
+            self.add_tab().await?;
+        }
+
         self.top_bar_input = input;
+
+        Ok(())
     }
 
     pub async fn load_input_force(&mut self) -> Result<(), VigiError> {

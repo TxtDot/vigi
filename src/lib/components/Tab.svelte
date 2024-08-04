@@ -14,11 +14,6 @@
     let tabElement: HTMLButtonElement;
 
     let hovered = false;
-    let loading = false;
-
-    isLoading.subscribe((val) => {
-        loading = val;
-    });
 </script>
 
 <div
@@ -39,7 +34,7 @@
     {/if}
 
     <button
-        class={`tab${loading && active ? " loading" : ""}`}
+        class={`tab${$isLoading && active ? " loading" : ""}`}
         class:active
         transition:slide={{ duration: 100 }}
         bind:this={tabElement}
@@ -49,14 +44,8 @@
             }
         }}
     >
-        <!-- <div class="static right-0">
-            {#if loading && active}
-                <GooLoad />
-            {/if}
-        </div> -->
-
         <div>
-            {tab.title}
+            {tab.title || tab.url}
         </div>
     </button>
 </div>

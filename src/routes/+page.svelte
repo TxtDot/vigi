@@ -5,18 +5,16 @@
     import Sidebar from "$lib/components/Sidebar.svelte";
     import BrowserWindow from "$lib/components/BrowserWindow.svelte";
 
-    import { invoke } from "@tauri-apps/api/tauri";
+    import { invoke } from "$lib/utils";
     import { loadInput, updateVigiState } from "$lib/utils";
     import { isLoading } from "$lib/stores";
 
     let sidebarOpen = true;
 
     (async () => {
-        isLoading.set(true);
         await invoke("setup");
         await updateVigiState();
         await loadInput();
-        isLoading.set(false);
     })();
 
     document.addEventListener("keypress", (e: KeyboardEvent) => {

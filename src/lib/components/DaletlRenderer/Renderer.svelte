@@ -1,10 +1,12 @@
 <script lang="ts">
-  import type { Root } from "@txtdot/dalet";
-  import TagRenderer from "./TagRenderer.svelte";
-
-  export let data: Root = [];
+    import TagRenderer from "./TagRenderer.svelte";
+    import { state } from "$lib/stores";
+    import ToTopScroller from "../ToTopScroller.svelte";
 </script>
 
-{#each data as tag}
-  <TagRenderer {tag} />
+{#each $state.current_data as tag, i}
+    {#if i === 0}
+        <ToTopScroller />
+    {/if}
+    <TagRenderer {tag} />
 {/each}

@@ -14,9 +14,10 @@ use utils::{read_or_create_jsonl, read_or_create_number};
 #[tauri::command]
 async fn update_input(
     input: String,
+    new_tab: bool,
     state: tauri::State<'_, Mutex<VigiState>>,
 ) -> Result<(), VigiError> {
-    state.lock().await.update_input(input);
+    state.lock().await.update_input(input, new_tab).await?;
 
     Ok(())
 }
