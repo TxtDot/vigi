@@ -199,16 +199,19 @@ impl VigiState {
     }
 
     pub fn remove_tab(&mut self, index: usize) -> Result<(), VigiError> {
-        if self.current_tab_index >= index {
-            if self.current_tab_index > 0 {
-                self.select_tab(self.current_tab_index - 1)?;
-            }
-        }
-
         self.cached_inputs
             .remove(&self.tabs.get(index).ok_or(VigiError::GetTab)?.url);
 
         self.tabs.remove(index);
+
+        if self.current_tab_index >= index {
+            if self.current_tab_index > 0 {
+                self.select_tab(self.current_tab_index - 1)?;
+            } else {
+                self.update_top_bar_input();
+            }
+        }
+
         write_tabs(&self.local_tabs_path, &self.tabs)?;
 
         Ok(())

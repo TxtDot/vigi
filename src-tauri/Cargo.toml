@@ -36,7 +36,7 @@ tokio-rustls = { version = "0.26.0", default-features = false, features = [
 bytes = "1.7.1"
 
 reqwest = "0.12.5"
-tokio-gemini = "0.1.0"
+tokio-gemini = "0.3.0"
 url = "2.5.2"
 mime = "0.3.17"
 
