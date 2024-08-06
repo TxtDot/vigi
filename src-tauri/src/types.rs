@@ -208,7 +208,7 @@ impl VigiState {
             if self.current_tab_index > 0 {
                 self.select_tab(self.current_tab_index - 1)?;
             } else {
-                self.update_top_bar_input();
+                self.update_top_bar_input()?;
             }
         }
 
