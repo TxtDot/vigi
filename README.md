@@ -6,7 +6,7 @@
 
 </div>
 
-Browser for dalet, text, gemtext (gemini protocol included) with native support of txtdot proxy and local txtdot engines
+Browser for dalet, text, gemtext with native support of txtdot proxy and local txtdot engines
 
 ## Features
 
@@ -14,21 +14,27 @@ Browser is WIP.
 
 See also: [Dalet](https://github.com/TxtDot/dalet).
 
-Format support:
+### Protocols support
 
-- [ ] Dalet support
-- [x] Text support
-- [ ] Gemtext support
-- [ ] Proxy support
-- [ ] Local txtdot engines support
+- [x] Http/s
+- [x] Gemini
+- [ ] Gopher
 
-Browser features:
+### Mime type support
 
-- [x] input url processing
-- [x] tab window hiding
-- [x] tabs
-- [x] tab switching
-- [x] tab closing
-- [x] save and restore tabs
-- [ ] save and restore favorites
-- [x] cache tab data
+- [ ] application/daletpack
+- [x] text/plain
+- [x] text/gemini
+- [ ] text/html (through local txtdot)
+
+### Browser features
+
+- [x] browser window: url processing, reload page
+- [ ] browser window: go forward, go backward
+- [x] current tabs: add,remove,change,save,restore,cache
+- [ ] favorite tabs: add,remove,change,save,restore,cache
+- [x] sidebar hiding
+- [ ] history
+- [ ] txtdot proxy support
+- [ ] local txtdot
+- [ ] proxy support
