@@ -9,7 +9,7 @@ mod utils;
 
 use tokio::sync::Mutex;
 use types::{VigiError, VigiJsState, VigiState};
-use utils::{read_or_create_jsonl, read_or_create_number};
+use utils::{create_file, read_or_create_jsonl, read_or_create_number};
 
 #[tauri::command]
 async fn update_input(
@@ -132,6 +132,14 @@ async fn setup(
 
     state.current_tab_index_path = local_data_dir.join("current_tab_index");
     state.current_tab_index = read_or_create_number(&state.current_tab_index_path);
+
+    println!("Checking cache dir");
+    if !state.cache_dir.exists() {
+        println!("  Creating cache dir");
+        fs::create_dir_all(&state.cache_dir).map_err(|_| VigiError::Config)?;
+    }
+
+    state.gemini_certs_path = create_file(state.cache_dir.join("gemini_certs"));
 
     state.update_top_bar_input()?;
 

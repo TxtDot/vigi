@@ -38,6 +38,15 @@ pub fn read_or_create_number(path: &PathBuf) -> usize {
     }
 }
 
+pub fn create_file(path: PathBuf) -> PathBuf {
+    if !path.exists() {
+        println!("    Creating {}", path.to_string_lossy());
+        File::create(&path).unwrap();
+    }
+
+    path
+}
+
 pub fn write_tabs(path: &PathBuf, tabs: &Vec<Tab>) -> Result<(), VigiError> {
     fs::write(
         path,

@@ -22,6 +22,8 @@ pub enum VigiError {
     InvalidMimeType,
 
     InvalidCharset,
+
+    GeminiCertsFile,
 }
 
 #[derive(Debug, Clone)]
@@ -30,6 +32,7 @@ pub struct VigiState {
     pub current_tab_index_path: PathBuf,
     pub local_tabs_path: PathBuf,
     pub favorites_tabs_path: PathBuf,
+    pub gemini_certs_path: PathBuf,
 
     pub cache_dir: PathBuf,
 
@@ -74,6 +77,8 @@ impl VigiState {
             current_tab_index_path: PathBuf::new(),
             local_tabs_path: PathBuf::new(),
             favorites_tabs_path: PathBuf::new(),
+            gemini_certs_path: PathBuf::new(),
+
             cache_dir: PathBuf::new(),
 
             tabs_id_counter: 0,
@@ -135,7 +140,7 @@ impl VigiState {
                     vec![El("Type something in the address bar".into()).into()],
                 )
             } else {
-                process_input(&self.top_bar_input).await?
+                process_input(&self.top_bar_input, &self).await?
             }
         };
 
