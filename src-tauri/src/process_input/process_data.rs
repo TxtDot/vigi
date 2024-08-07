@@ -1,9 +1,16 @@
 use bytes::Bytes;
-use dalet::{daletl::DlPage, parsers::gemtext::parse_gemtext, typed::Tag::*};
+use dalet::{
+    daletl::DlPage,
+    parsers::gemtext::parse_gemtext,
+    typed::{ResolveTitle, Tag::*},
+};
 use mime::Mime;
 use std::str;
 
-use crate::types::{VigiError, VigiOutput};
+use crate::{
+    types::{VigiError, VigiOutput},
+    utils::truncate,
+};
 
 pub async fn process_data(mime: Mime, data: Bytes) -> Result<VigiOutput, VigiError> {
     let result = match (mime.type_().as_str(), mime.subtype().as_str()) {
@@ -27,13 +34,10 @@ async fn process_text(data: &str) -> VigiOutput {
 }
 
 async fn process_gemini(data: &str) -> Result<VigiOutput, VigiError> {
-    let mut truncated = data.to_owned();
-    truncated.truncate(50);
+    let truncated = truncate(data, 20);
 
     let page = parse_gemtext(data).map_err(|_| VigiError::Parse)?;
-    let output = DlPage::from(page).data;
+    let title = page.resolve_title().unwrap_or(truncated.to_owned());
 
-    let res = VigiOutput::new(truncated, output);
-
-    Ok(res)
+    Ok(VigiOutput::new(title.to_owned(), DlPage::from(page).data))
 }

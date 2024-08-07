@@ -609,9 +609,9 @@ dependencies = [
 
 [[package]]
 name = "dalet"
-version = "1.0.0-pre.12"
+version = "1.0.0-pre.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fcb1baee9a3c3f0f6aed8cb4cf29331717227cb92dd6204e2df963dd315d69c1"
+checksum = "bf04981045a3b665c3b52a753a72f976489aac293462363375767d91b1ae74fb"
 dependencies = [
  "clap",
  "enum-procs",

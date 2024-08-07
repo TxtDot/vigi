@@ -57,3 +57,10 @@ pub fn write_tabs(path: &PathBuf, tabs: &Vec<Tab>) -> Result<(), VigiError> {
     )
     .map_err(|_| VigiError::StateUpdate)
 }
+
+pub fn truncate(s: &str, max_chars: usize) -> &str {
+    match s.char_indices().nth(max_chars) {
+        Some((idx, _)) => &s[..idx],
+        None => s,
+    }
+}
