@@ -609,9 +609,9 @@ dependencies = [
 
 [[package]]
 name = "dalet"
-version = "1.0.0-pre.10"
+version = "1.0.0-pre.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8cccea0b163fbc0bc06f125bf69dfff4518336b63b86462f8c711366eef9e3e3"
+checksum = "fcb1baee9a3c3f0f6aed8cb4cf29331717227cb92dd6204e2df963dd315d69c1"
 dependencies = [
  "clap",
  "enum-procs",
@@ -654,6 +654,20 @@ dependencies = [
  "darling_core",
  "quote",
  "syn 2.0.72",
+]
+
+[[package]]
+name = "dashmap"
+version = "6.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "804c8821570c3f8b70230c2ba75ffa5c0f9a4189b9a432b6656c536712acae28"
+dependencies = [
+ "cfg-if",
+ "crossbeam-utils",
+ "hashbrown 0.14.5",
+ "lock_api",
+ "once_cell",
+ "parking_lot_core",
 ]
 
 [[package]]
@@ -3724,12 +3738,13 @@ dependencies = [
 
 [[package]]
 name = "tokio-gemini"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bab37428a69ae0349cf6dd0182a6da06f065aa8c40ca18d9414a02e6fb49d875"
+checksum = "f7daf3995399caee7c8a2bd6de9e5f977443578b54130600f58a47409b90d360"
 dependencies = [
  "base64ct",
  "bytes",
+ "dashmap",
  "mime",
  "num_enum 0.7.3",
  "sha2",

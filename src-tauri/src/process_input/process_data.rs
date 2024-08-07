@@ -1,5 +1,5 @@
 use bytes::Bytes;
-use dalet::{daletl::ToDaletlPage, parsers::gemtext::parse_gemtext, typed::Tag::*};
+use dalet::{daletl::DlPage, parsers::gemtext::parse_gemtext, typed::Tag::*};
 use mime::Mime;
 use std::str;
 
@@ -23,19 +23,17 @@ async fn process_text(data: &str) -> VigiOutput {
     let mut truncated = data.to_owned();
     truncated.truncate(50);
 
-    VigiOutput::new(truncated, vec![El(data.into())].to_dl_page())
+    VigiOutput::new(truncated, vec![El(data.into()).into()])
 }
 
 async fn process_gemini(data: &str) -> Result<VigiOutput, VigiError> {
     let mut truncated = data.to_owned();
     truncated.truncate(50);
 
-    let res = VigiOutput::new(
-        truncated,
-        parse_gemtext(data)
-            .map_err(|_| VigiError::Parse)?
-            .to_dl_page(),
-    );
+    let page = parse_gemtext(data).map_err(|_| VigiError::Parse)?;
+    let output = DlPage::from(page).data;
+
+    let res = VigiOutput::new(truncated, output);
 
     Ok(res)
 }

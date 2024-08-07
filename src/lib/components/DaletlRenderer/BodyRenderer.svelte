@@ -4,9 +4,12 @@
 
     export let body: Body;
     export let ifNull: any = undefined;
+    export let preformatted = false;
 </script>
 
-{#if typeof body === "string"}
+{#if typeof body === "string" && preformatted}
+    {body}
+{:else if typeof body === "string"}
     {#each body.split("\n") as line}
         {line} <br />
     {/each}

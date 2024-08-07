@@ -13,8 +13,7 @@ export async function updateAndLoadInput(input: string, newTab?: boolean) {
   await invoke("update_input", { input, newTab: !!newTab });
   await updateVigiState();
 
-  await invoke("load_input_force");
-  await updateVigiState();
+  await loadInput(true);
 }
 
 export async function addTab() {
@@ -29,13 +28,21 @@ export async function selectTab(index: number) {
 }
 
 export async function removeTab(index: number) {
+  let tabChanged = get(state).current_tab_index === index;
+
   await invoke("remove_tab", { index });
   await updateVigiState();
-  setTimeout(loadInput, 150);
+
+  if (tabChanged) setTimeout(loadInput, 150);
 }
 
-export async function loadInput() {
-  await invoke("load_input");
+export async function loadInput(force = true) {
+  document.getElementsByClassName("browser-window")[0]?.scrollTo(0, 0);
+  if (force) {
+    await invoke("load_input_force");
+  } else {
+    await invoke("load_input");
+  }
   await updateVigiState();
 }
 

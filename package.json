@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@tauri-apps/api": "^1",
-    "@txtdot/dalet": "1.0.0-pre1"
+    "@txtdot/dalet": "1.0.0-pre3"
   },
   "devDependencies": {
     "@iconify/svelte": "^4.0.2",

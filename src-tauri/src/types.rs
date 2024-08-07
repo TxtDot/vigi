@@ -1,4 +1,4 @@
-use dalet::daletl::{Tag, ToDaletlPage};
+use dalet::daletl::DlTag;
 use dalet::typed::Tag::*;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fs, path::PathBuf};
@@ -41,18 +41,18 @@ pub struct VigiState {
 
     // Temporary
     pub top_bar_input: String,
-    pub current_data: Vec<Tag>,
+    pub current_data: Vec<DlTag>,
     pub cached_inputs: HashMap<String, VigiOutput>,
 }
 
 #[derive(Debug, Clone)]
 pub struct VigiOutput {
     pub title: String,
-    pub data: Vec<Tag>,
+    pub data: Vec<DlTag>,
 }
 
 impl VigiOutput {
-    pub fn new(title: String, data: Vec<Tag>) -> Self {
+    pub fn new(title: String, data: Vec<DlTag>) -> Self {
         Self { title, data }
     }
 }
@@ -64,7 +64,7 @@ pub struct VigiJsState {
     pub favorites_tabs: Vec<Tab>,
 
     pub top_bar_input: String,
-    pub current_data: Vec<Tag>,
+    pub current_data: Vec<DlTag>,
 }
 
 impl VigiState {
@@ -132,7 +132,7 @@ impl VigiState {
             } else if self.top_bar_input.is_empty() {
                 VigiOutput::new(
                     "Homepage".to_owned(),
-                    vec![El("Type something in the address bar".into())].to_dl_page(),
+                    vec![El("Type something in the address bar".into()).into()],
                 )
             } else {
                 process_input(&self.top_bar_input).await?
