@@ -44,7 +44,7 @@ These types supported by drova plugins. [See drova plugins](https://github.com/T
 - [x] text/plain
 - [x] text/gemini
 - [x] text/markdown
-- [ ] text/html
+- [x] text/html
 
 ### Browser features
 
