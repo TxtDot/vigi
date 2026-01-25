@@ -81,3 +81,11 @@
 .render hr {
   @apply border-1 my-2 rounded-2xl theme-0;
 }
+
+.render .block {
+  @apply theme-80 p-4 rounded-2xl;
+}
+
+.render img {
+  @apply rounded-2xl w-full;
+}

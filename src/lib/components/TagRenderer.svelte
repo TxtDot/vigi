@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Tag } from "@txtdot/dalet";
+  import type { Body, Tag } from "@txtdot/dalet";
   import BodyRenderer from "./BodyRenderer.svelte";
   import { renderLink } from "$lib/utils";
   import Highlight, { HighlightAuto } from "svelte-highlight";
@@ -30,6 +30,14 @@
       <BodyRenderer body={tag.NavLink.body} />
     {:else}
       <TextRenderer>{tag.NavLink.dref}</TextRenderer>
+    {/if}
+  </a>
+{:else if tag.Link}
+  <a href={tag.Link.dref} target="_blank" rel="noopener noreferrer">
+    {#if tag.Link.body}
+      <BodyRenderer body={tag.Link.body} />
+    {:else}
+      <TextRenderer>{tag.Link.dref}</TextRenderer>
     {/if}
   </a>
 {:else if tag.Heading}
@@ -80,6 +88,18 @@
 {:else if tag.Mono}
   <pre>
 {tag.Mono.body}</pre>
+{:else if tag.Bold}
+  <strong>{tag.Bold.body}</strong>
+{:else if tag.Italic}
+  <em>{tag.Italic.body}</em>
+{:else if tag.Strikethrough}
+  <s>{tag.Strikethrough.body}</s>
+{:else if tag.InlineCode}
+  <code>{tag.InlineCode.body}</code>
+{:else if tag.Block}
+  <div class="block"><BodyRenderer body={{ Tags: tag.Block.body }} /></div>
+{:else if tag.Image}
+  <img src={tag.Image.src} alt={tag.Image.alt ?? ""} />
 {:else}
   <p class="unsupported">
     <TextRenderer>Unsupported Tag: {JSON.stringify(tag, null, 2)}</TextRenderer>

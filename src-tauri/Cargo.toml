@@ -40,4 +40,4 @@ dalet = { version = "1.0.0-pre.34", features = [
   "types",
 ], default-features = false }
 drova_sdk = "3.0.1"
-drova_plugins = "3.0.2"
+drova_plugins = "3.1.0-rc.1"

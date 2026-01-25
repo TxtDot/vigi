@@ -1,2 +1,1 @@
-<pre class="font-sans text-pretty">
-<slot /></pre>
+<span class="whitespace-pre-wrap font-sans text-pretty"><slot /></span>
