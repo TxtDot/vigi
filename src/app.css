@@ -5,6 +5,8 @@
 
 @import "./style/render.css";
 @import "./style/code.css";
+@import "./style/components.css";
+@import "./style/pages.css";
 
 @utility compact-block {
   @apply theme-60 p-1 rounded-2xl;
@@ -18,10 +20,16 @@ body {
   @apply theme-90 cursor-default overflow-clip;
   user-select: none;
 
-  @apply p-0 lg:p-2 gap-3 w-screen h-screen;
+  @apply p-5 lg:p-2 gap-3 w-screen h-screen;
   @apply flex;
 
   @apply ease-out duration-100;
+
+  /* Safe area insets for mobile (status bar, navigation bar) */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 .browser {

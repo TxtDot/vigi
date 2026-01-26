@@ -1,0 +1,115 @@
+/* Window Controls */
+.window-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  -webkit-app-region: no-drag;
+}
+
+.window-control-close:hover {
+  background-color: var(--close-button-hover-bg) !important;
+}
+
+/* Toast notifications */
+.toast-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 320px;
+}
+
+.toast {
+  @apply theme-30 rounded-2xl p-3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: toast-slide-in 0.2s ease-out;
+}
+
+.toast-success {
+  border-left: 4px solid #4caf50;
+}
+
+.toast-error {
+  border-left: 4px solid #f44336;
+}
+
+.toast-info {
+  border-left: 4px solid #2196f3;
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.toast-dismiss {
+  @apply theme-50 rounded-2xl p-1;
+  @apply hover:theme-60;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Bookmark popup */
+.bookmark-wrapper {
+  position: relative;
+}
+
+.bookmark-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  @apply theme-40 rounded-2xl p-3;
+  min-width: 250px;
+  z-index: 50;
+}
+
+.popup-header {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.popup-btn {
+  @apply theme-60 rounded-2xl px-3 py-1;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.popup-btn.save:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+.popup-btn.delete:hover {
+  background-color: #c62828;
+  color: white;
+}
+
+.popup-btn.cancel:hover {
+  @apply theme-50;
+}

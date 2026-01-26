@@ -3,6 +3,7 @@ import type { DrovaError, SiteTab, TabLink, VigiState } from "./types";
 import { goto } from "$app/navigation";
 import { invoke } from "@tauri-apps/api/core";
 import type { Page, Tag } from "@txtdot/dalet";
+import { manageLink } from "./management";
 
 export function tabIndexById(id: number) {
   return vigi.tabs.findIndex((tab) => tab.id === id);
@@ -43,20 +44,31 @@ export async function loadTab(id: number, uri: string) {
 
     const currLink = currentLinkByTabId(id);
 
-    if (currLink.ty === "RENDER" && currLink.uri === uri)
+    if (currLink.ty === "RENDER" && currLink.uri === uri) {
       updateLinkByTabId(id, {
         body,
         title,
         error: undefined,
         loading: undefined,
       });
-    else updateLinkByTabId(id, { loading: undefined });
+
+      // Add to history
+      addToHistory(uri, title);
+    } else {
+      updateLinkByTabId(id, { loading: undefined });
+    }
   } catch (e) {
     error = convertError(e);
     updateLinkByTabId(id, { loading: undefined, error });
   }
 
   return { body, error };
+}
+
+export function addToHistory(uri: string, title?: string) {
+  invoke("add_history", { uri, title }).catch(() => {
+    // Silently fail - history is not critical
+  });
 }
 
 export function convertError(e: any): DrovaError {
@@ -145,10 +157,12 @@ export function gotoTBI(tbi: string) {
   const url = isUrl(tbi);
   if (url) {
     if (url.protocol !== "browser:") {
+      manageLink("RENDER", tbi);
       goto(renderLink(tbi));
     } else {
       // browser://main -> /browser/main
       const page = url.hostname + (url.pathname !== "/" ? url.pathname : "");
+      manageLink("BROWSER", page);
       const knownPages = ["main", "history", "bookmarks", "settings"];
       if (knownPages.includes(page)) {
         goto(`/browser/${page}`);

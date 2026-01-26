@@ -1,0 +1,602 @@
+/* Common page styles */
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.page-search {
+  @apply theme-60 rounded-2xl px-3 py-2;
+  border: none;
+  outline: none;
+  min-width: 200px;
+}
+
+.page-search:focus {
+  @apply theme-50;
+}
+
+.page-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  opacity: 0.8;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.section-header .section-title {
+  margin-bottom: 0;
+}
+
+.section-link {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.section-link:hover {
+  opacity: 1;
+}
+
+.empty-state {
+  @apply theme-70 rounded-2xl p-8;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* Settings page */
+.settings-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.settings-section {
+  @apply theme-70 rounded-2xl p-4 mb-4;
+}
+
+.settings-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.settings-row {
+  margin-bottom: 1rem;
+}
+
+.settings-row:last-child {
+  margin-bottom: 0;
+}
+
+.settings-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.theme-options {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.theme-option {
+  @apply theme-60 rounded-2xl p-2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.theme-option:hover {
+  @apply theme-50;
+}
+
+.theme-option.selected {
+  border-color: var(--min-text);
+}
+
+.theme-preview {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.green-theme-preview {
+  background: linear-gradient(135deg, #7cb972, #193815);
+}
+
+.blue-theme-preview {
+  background: linear-gradient(135deg, #3e4ed6, #0a1043);
+}
+
+.dark-theme-preview {
+  background: linear-gradient(135deg, #757575, #080808);
+}
+
+.light-theme-preview {
+  background: linear-gradient(135deg, #f0f0f0, #ffffff);
+  border: 1px solid #ccc;
+}
+
+.settings-select,
+.settings-input {
+  @apply theme-50 rounded-2xl p-2;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.settings-select:focus,
+.settings-input:focus {
+  @apply theme-40;
+}
+
+.custom-css-input {
+  @apply theme-50 rounded-2xl p-2;
+  width: 100%;
+  min-height: 150px;
+  border: none;
+  outline: none;
+  font-family: monospace;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+
+.settings-link {
+  color: var(--min-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.settings-link:hover {
+  opacity: 1;
+}
+
+.settings-button {
+  @apply theme-50 rounded-2xl px-4 py-2;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+.settings-button:hover {
+  @apply theme-40;
+}
+
+.settings-button.danger:hover {
+  background-color: #c62828;
+  color: white;
+}
+
+/* History page */
+.frequent-sites {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.frequent-site {
+  @apply theme-60 rounded-2xl p-3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 80px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.frequent-site:hover {
+  @apply theme-50;
+}
+
+.visit-count {
+  font-size: 1.25rem;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.site-name {
+  font-size: 0.75rem;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.day-group {
+  margin-bottom: 0.5rem;
+}
+
+.day-header {
+  @apply theme-70 rounded-2xl px-3 py-2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.day-header:hover {
+  @apply theme-60;
+}
+
+.day-arrow {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.day-name {
+  font-weight: 600;
+}
+
+.day-count {
+  opacity: 0.5;
+  font-size: 0.85rem;
+}
+
+.day-entries {
+  margin-top: 0.25rem;
+  margin-left: 1rem;
+}
+
+.history-entry {
+  @apply theme-80 rounded-2xl px-3 py-2;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  margin-bottom: 0.25rem;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.history-entry:hover {
+  @apply theme-70;
+}
+
+.entry-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.entry-title {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entry-uri {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entry-time {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+/* Bookmarks page */
+.tags-filter {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.tag-filter-btn {
+  @apply theme-70 rounded-2xl px-3 py-1;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tag-filter-btn:hover {
+  @apply theme-60;
+}
+
+.tag-filter-btn.selected {
+  @apply theme-40;
+}
+
+.bookmarks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bookmark-card {
+  @apply theme-70 rounded-2xl;
+  display: flex;
+  overflow: hidden;
+}
+
+.bookmark-content {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.bookmark-content:hover {
+  @apply theme-60;
+}
+
+.bookmark-edit {
+  flex: 1;
+  padding: 0.75rem 1rem;
+}
+
+.bookmark-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.bookmark-title {
+  font-weight: 500;
+}
+
+.bookmark-uri {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bookmark-tags {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.bookmark-tag {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  @apply theme-50 rounded px-1;
+}
+
+.bookmark-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-right: 0.5rem;
+}
+
+.action-btn {
+  @apply theme-60 rounded-2xl p-2;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  @apply theme-50;
+}
+
+.action-btn.danger:hover {
+  background-color: #c62828;
+  color: white;
+}
+
+.edit-tags-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.edit-tags-input,
+.tags-input {
+  @apply theme-50 rounded-2xl px-2 py-1;
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+}
+
+.tags-input {
+  @apply theme-60 rounded-2xl px-3 py-2;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.edit-btn {
+  @apply theme-50 rounded-2xl px-3 py-1;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.edit-btn.save:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-btn.cancel:hover {
+  @apply theme-40;
+}
+
+/* Main page */
+.main-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.search-section {
+  margin-bottom: 2rem;
+}
+
+.main-search {
+  @apply theme-60 rounded-2xl px-6 py-4;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.main-search:focus {
+  @apply theme-50;
+  text-align: left;
+}
+
+.main-section {
+  margin-bottom: 1.5rem;
+}
+
+.main-section .section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.7;
+  margin-bottom: 0.75rem;
+}
+
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.75rem;
+}
+
+.site-card {
+  @apply theme-70 rounded-2xl p-3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.site-card:hover {
+  @apply theme-60;
+}
+
+.site-icon {
+  @apply theme-50 rounded-2xl;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.recent-item {
+  @apply theme-70 rounded-2xl px-3 py-2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.recent-item:hover {
+  @apply theme-60;
+}
+
+.recent-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-uri {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.recent-time {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.bookmark-item {
+  @apply theme-70 rounded-2xl px-3 py-2;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.bookmark-item:hover {
+  @apply theme-60;
+}
+
+.empty-hint {
+  font-size: 0.9rem !important;
+  opacity: 0.6;
+}
+
+/* Search redirect */
+.search-redirect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  opacity: 0.6;
+}

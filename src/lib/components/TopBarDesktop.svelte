@@ -1,6 +1,7 @@
 <script lang="ts">
   import CompactBlock from "./CompactBlock.svelte";
   import ThinBlock from "./ThinBlock.svelte";
+  import WindowControls from "./WindowControls.svelte";
 
   import SideBarButton from "./buttons/SideBarButton.svelte";
   import HistoryBack from "./buttons/HistoryBack.svelte";
@@ -12,7 +13,7 @@
   import PlusTabButton from "./buttons/PlusTabButton.svelte";
 </script>
 
-<div class="top-bar">
+<div class="top-bar" data-tauri-drag-region>
   <CompactBlock className="navigation-buttons">
     <SideBarButton />
     <PlusTabButton />
@@ -29,4 +30,8 @@
     <TopBarInput />
     <BookmarkButton />
   </ThinBlock>
+
+  <CompactBlock className="navigation-buttons">
+    <WindowControls />
+  </CompactBlock>
 </div>

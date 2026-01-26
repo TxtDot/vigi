@@ -35,4 +35,40 @@ export interface TemporalState {
   first_load: boolean;
   sidebar_scroll: number;
   sidebar_open: boolean;
+  toasts: ToastMessage[];
+}
+
+// History
+
+export interface HistoryEntry {
+  uri: string;
+  title?: string;
+  timestamp: number;
+  visit_count: number;
+}
+
+// Bookmarks
+
+export interface Bookmark {
+  uri: string;
+  title: string;
+  tags: string[];
+  created_at: number;
+}
+
+// Settings
+
+export interface Settings {
+  theme: string;
+  custom_css?: string;
+  search_engine: string;
+  home_page: string;
+}
+
+// Toast notifications
+
+export interface ToastMessage {
+  id: number;
+  type: "success" | "error" | "info";
+  message: string;
 }

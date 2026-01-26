@@ -55,3 +55,54 @@ pub struct PermanentTabLink {
     pub ty: TabType,
     pub uri: String,
 }
+
+// History
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct HistoryEntry {
+    pub uri: String,
+    pub title: Option<String>,
+    pub timestamp: i64,
+    pub visit_count: u32,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct History {
+    pub entries: Vec<HistoryEntry>,
+}
+
+// Bookmarks
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Bookmark {
+    pub uri: String,
+    pub title: String,
+    pub tags: Vec<String>,
+    pub created_at: i64,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct Bookmarks {
+    pub items: Vec<Bookmark>,
+}
+
+// Settings
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Settings {
+    pub theme: String,
+    pub custom_css: Option<String>,
+    pub search_engine: String,
+    pub home_page: String,
+}
+
+impl Default for Settings {
+    fn default() -> Self {
+        Self {
+            theme: "green".to_string(),
+            custom_css: None,
+            search_engine: "https://s.dc09.xyz/search?q=%s".to_string(),
+            home_page: "browser://main".to_string(),
+        }
+    }
+}

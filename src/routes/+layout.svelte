@@ -1,6 +1,7 @@
 <script lang="ts">
   import TopBarDesktop from "$lib/components/TopBarDesktop.svelte";
   import TopBarMobile from "$lib/components/TopBarMobile.svelte";
+  import Toast from "$lib/components/Toast.svelte";
   import { temporal, vigi } from "$lib/state.svelte";
   import { onMount } from "svelte";
   import "../app.css";
@@ -29,7 +30,7 @@
   document.addEventListener("keypress", (e: KeyboardEvent) => {
     if (
       ["INPUT", "TEXTAREA", "SELECT", "OPTION"].includes(
-        (e.target as Element).tagName
+        (e.target as Element).tagName,
       )
     ) {
       return;
@@ -42,13 +43,13 @@
   let is_desktop = $derived(width >= 1024);
 
   let sidebar_open = $derived(
-    is_desktop ? temporal.sidebar_open : !temporal.sidebar_open
+    is_desktop ? temporal.sidebar_open : !temporal.sidebar_open,
   );
 </script>
 
 <svelte:window bind:innerWidth={width} />
 
-<div class="flex w-full">
+<div class="flex w-full" class:p-2={is_desktop}>
   {#if sidebar_open}
     <SideBar {is_desktop} />
   {/if}
@@ -72,3 +73,5 @@
     {/if}
   </div>
 </div>
+
+<Toast />

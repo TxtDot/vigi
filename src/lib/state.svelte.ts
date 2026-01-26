@@ -20,9 +20,27 @@ export const vigi: VigiState = $state({
 });
 
 export const temporal: TemporalState = $state({
-  loading: false,
   top_bar_open: false,
   first_load: true,
   sidebar_open: true,
   sidebar_scroll: 0,
+  toasts: [],
 });
+
+let toastCounter = 0;
+
+export function showToast(
+  message: string,
+  type: "success" | "error" | "info" = "info"
+) {
+  const id = ++toastCounter;
+  temporal.toasts.push({ id, message, type });
+
+  setTimeout(() => {
+    temporal.toasts = temporal.toasts.filter((t) => t.id !== id);
+  }, 4000);
+}
+
+export function dismissToast(id: number) {
+  temporal.toasts = temporal.toasts.filter((t) => t.id !== id);
+}

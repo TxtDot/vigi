@@ -33,7 +33,7 @@
     {/if}
   </a>
 {:else if tag.Link}
-  <a href={tag.Link.dref} target="_blank" rel="noopener noreferrer">
+  <a href={renderLink(tag.Link.dref, true)}>
     {#if tag.Link.body}
       <BodyRenderer body={tag.Link.body} />
     {:else}
