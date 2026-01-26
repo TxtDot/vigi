@@ -29,7 +29,7 @@ tokio = { version = "1", features = ["full"] }
 tokio-gemini = { version = "0.5.2" }
 bytes = "1.10.1"
 
-reqwest = "0.12.5"
+reqwest = "0.13.1"
 url = "2.5.4"
 mime = "0.3.17"
 async-trait = "0.1.88"
@@ -40,4 +40,4 @@ dalet = { version = "1.0.0-pre.34", features = [
   "types",
 ], default-features = false }
 drova_sdk = "3.0.1"
-drova_plugins = "3.1.0-rc.1"
+drova_plugins = "3.1.0-rc.2"
