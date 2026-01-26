@@ -1,4 +1,3 @@
-import { invalidateAll } from "$app/navigation";
 import { manageLink } from "$lib/management";
 import type { DrovaError } from "$lib/types.js";
 import {
@@ -8,8 +7,15 @@ import {
   updateLinkByTabId,
 } from "$lib/utils.js";
 import type { Tag } from "@txtdot/dalet";
+import { redirect } from "@sveltejs/kit";
 
-export async function load({ params }) {
+export async function load({ url }) {
+  const uri = url.searchParams.get("uri");
+
+  if (!uri) {
+    redirect(307, "/browser/main");
+  }
+
   const currTab = currentTab();
 
   updateLinkByTabId(currTab.id, { loading: undefined });
@@ -21,7 +27,7 @@ export async function load({ params }) {
 
   if (
     currLink.ty === "RENDER" &&
-    currLink.uri === params.uri &&
+    currLink.uri === uri &&
     currLink.body &&
     currLink.title
   ) {
@@ -29,9 +35,9 @@ export async function load({ params }) {
   } else if (currLink.error) {
     error = currLink.error;
   } else {
-    manageLink("RENDER", params.uri);
+    manageLink("RENDER", uri);
 
-    const res = await loadTab(currTab.id, params.uri);
+    const res = await loadTab(currTab.id, uri);
 
     body = res.body;
     error = res.error;

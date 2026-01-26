@@ -34,15 +34,16 @@ These protocols supported by drova plugins. [See drova plugins](https://github.c
 
 - [x] Http/s
 - [x] Gemini
-- [ ] Gopher
+- [x] Gopher
 
 ### Mime type support
 
 These types supported by drova plugins. [See drova plugins](https://github.com/TempoWorks/drova/tree/main/drova_plugins) for full list of supported formats
 
-- [ ] application/daletpack
+- [x] application/daletpack
 - [x] text/plain
 - [x] text/gemini
+- [x] text/x-gophermap
 - [x] text/markdown
 - [x] text/html
 

@@ -1,4 +1,4 @@
-/src/main/java/com/vigi/app/generated
+/src/main/java/org/tempoworks/vigi/generated
 /src/main/jniLibs/**/*.so
 /src/main/assets/tauri.conf.json
 /tauri.build.gradle.kts

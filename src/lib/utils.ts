@@ -100,7 +100,13 @@ export function innerURN(link: TabLink): string {
   if (link.ty === "RENDER") {
     return renderLink(link.uri);
   } else {
-    return `/${link.ty.toLowerCase()}/${link.uri}`;
+    // browser://main -> /browser/main, browser://settings -> /browser/settings
+    // other browser:// URIs -> /browser?urn=...
+    const knownPages = ["main", "history", "bookmarks", "settings"];
+    if (knownPages.includes(link.uri)) {
+      return `/browser/${link.uri}`;
+    }
+    return `/browser?urn=${encodeURIComponent(link.uri)}`;
   }
 }
 
@@ -112,13 +118,13 @@ export function linkToURI(link: TabLink) {
 export function renderLink(uri: string, relative?: boolean) {
   if (relative) {
     try {
-      return `/render/${encodeURIComponent(
+      return `/render?uri=${encodeURIComponent(
         new URL(uri, currentLink().uri).toString()
       )}`;
     } catch {}
   }
 
-  return `/render/${encodeURIComponent(uri)}`;
+  return `/render?uri=${encodeURIComponent(uri)}`;
 }
 
 export function formatInputLink(link: TabLink): string {
@@ -137,10 +143,22 @@ export function formatInputLink(link: TabLink): string {
 
 export function gotoTBI(tbi: string) {
   const url = isUrl(tbi);
-  if (url)
-    if (url.protocol !== "browser:") goto(renderLink(tbi));
-    else goto(`/browser/${url.hostname}/${url.pathname}`);
-  else goto(`/browser/search/${encodeURIComponent(tbi)}`);
+  if (url) {
+    if (url.protocol !== "browser:") {
+      goto(renderLink(tbi));
+    } else {
+      // browser://main -> /browser/main
+      const page = url.hostname + (url.pathname !== "/" ? url.pathname : "");
+      const knownPages = ["main", "history", "bookmarks", "settings"];
+      if (knownPages.includes(page)) {
+        goto(`/browser/${page}`);
+      } else {
+        goto(`/browser?urn=${encodeURIComponent(page)}`);
+      }
+    }
+  } else {
+    goto(`/browser/search?q=${encodeURIComponent(tbi)}`);
+  }
 }
 
 export function isUrl(s: string) {
