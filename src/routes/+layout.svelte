@@ -40,7 +40,7 @@
 
   let width: number = $state(0);
 
-  let is_desktop = $derived(width >= 1024);
+  let is_desktop = $derived(width >= 640);
 
   let sidebar_open = $derived(
     is_desktop ? temporal.sidebar_open : !temporal.sidebar_open,

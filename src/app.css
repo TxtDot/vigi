@@ -20,7 +20,7 @@ body {
   @apply theme-90 cursor-default overflow-clip;
   user-select: none;
 
-  @apply p-5 lg:p-2 gap-3 w-screen h-screen;
+  @apply p-5 sm:p-2 gap-3 w-screen h-screen;
   @apply flex;
 
   @apply ease-out duration-100;
@@ -34,16 +34,16 @@ body {
 
 .browser {
   @apply overflow-y-auto text-wrap select-text cursor-auto overflow-x-hidden h-full;
-  @apply lg:border-2 p-2 lg:rounded-2xl;
+  @apply sm:border-2 p-2 sm:rounded-2xl;
 
   border-color: var(--min-text);
 }
 
 .sidebar {
   @apply overflow-y-auto text-wrap overflow-x-hidden flex gap-1 flex-col pr-2;
-  @apply w-60 max-lg:w-full h-full;
+  @apply w-60 max-sm:w-full h-full;
   @apply theme-90 z-40;
-  @apply max-lg:absolute max-lg:pb-16 max-lg:p-2;
+  @apply max-sm:absolute max-sm:pb-16 max-sm:p-2;
 
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -85,13 +85,13 @@ body {
 }
 
 .tab-close {
-  @apply lg:opacity-0 absolute right-1 theme-transition;
+  @apply sm:opacity-0 absolute right-1 theme-transition;
 
   transition-property: opacity, padding, color, background-color;
 }
 
 .tab-container:hover .tab-close {
-  @apply lg:opacity-100;
+  @apply sm:opacity-100;
 }
 
 .tab:hover .tab-text {
@@ -99,11 +99,11 @@ body {
 }
 
 .top-bar {
-  @apply flex gap-1 max-lg:theme-60;
+  @apply flex gap-1 max-sm:theme-60;
 }
 
 .bot-bar {
-  @apply flex gap-1 lg:gap-2 max-lg:theme-60 z-50;
+  @apply flex gap-1 sm:gap-2 max-sm:theme-60 z-50;
 }
 
 .navigation-buttons {
@@ -119,7 +119,7 @@ body {
 }
 
 .main-window {
-  @apply flex flex-col overflow-y-auto gap-0 lg:gap-2 grow;
+  @apply flex flex-col overflow-y-auto gap-0 sm:gap-2 grow;
 }
 
 .top-bar-search-input {
@@ -184,7 +184,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  @apply w-[16px] h-[16px] lg:w-[24px] lg:h-[16px];
+  @apply w-[16px] h-[16px] sm:w-[24px] sm:h-[16px];
 }
 
 ::-webkit-scrollbar-track {

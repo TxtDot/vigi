@@ -7,12 +7,12 @@
 
 {#if data.error}
   <div
-    class="flex max-lg:flex-col items-center lg:justify-center h-full gap-5 mx-auto"
+    class="flex max-sm:flex-col items-center sm:justify-center h-full gap-5 mx-auto"
   >
     <Alert width="128" height="128" class="opacity-50" />
 
     <div class="flex flex-col">
-      <h1 class="text-4xl font-black max-lg:text-center">
+      <h1 class="text-4xl font-black max-sm:text-center">
         {data.error.message}
       </h1>
       <div class="text-xl font-semibold opacity-50 max-w-80">

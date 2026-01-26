@@ -31,7 +31,7 @@ let toastCounter = 0;
 
 export function showToast(
   message: string,
-  type: "success" | "error" | "info" = "info"
+  type: "success" | "error" | "info" = "info",
 ) {
   const id = ++toastCounter;
   temporal.toasts.push({ id, message, type });
